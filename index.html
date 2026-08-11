@@ -9,6 +9,9 @@
     <!-- Script de Gumroad para Checkout Flotante -->
     <script src="https://gumroad.com/js/gumroad.js"></script>
 
+    <!-- 🍿 Google AdSense (Tu código oficial) -->
+    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-8040246767660046" crossorigin="anonymous"></script>
+
     <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
     <style>
         body { 
@@ -36,7 +39,7 @@
         <div class="flex items-center gap-2">
             <span class="text-3xl">🍿</span>
             <h1 class="text-4xl font-cinema tracking-wider text-white">
-                DÓNDE TE <span class="text-red-600">VEO?</span>
+                DÓNDE TE <span class="text-red-600">VEO</span>
             </h1>
         </div>
         <!-- Botón de compra flotante -->
@@ -57,10 +60,16 @@
             </div>
         </div>
 
-        <!-- Banner Publicitario Estilo Cartelera -->
-        <div id="adBanner" class="bg-zinc-900/80 p-4 rounded-xl text-center text-zinc-400 mb-10 border border-zinc-800 shadow-md">
-            <p class="text-xs uppercase tracking-widest text-amber-500 font-semibold mb-1">Espacio Publicitario</p>
-            <p class="text-sm text-zinc-400">[ Anuncios de cartelera ] — <span class="text-red-500">Removidos con el Pase VIP</span></p>
+        <!-- Banner Publicitario Real con AdSense -->
+        <div id="adBanner" class="bg-zinc-900/80 p-2 rounded-xl text-center text-zinc-400 mb-10 border border-zinc-800 shadow-md min-h-[90px] flex flex-col justify-center items-center overflow-hidden">
+            <ins class="adsbygoogle"
+                 style="display:block"
+                 data-ad-client="ca-pub-8040246767660046"
+                 data-ad-format="auto"
+                 data-full-width-responsive="true"></ins>
+            <script>
+                 (adsbygoogle = window.adsbygoogle || []).push({});
+            </script>
         </div>
 
         <!-- Grid de Resultados -->
@@ -162,7 +171,15 @@
 
         function saveFavorite() {
             if (!isPro && favorites.length >= 5) {
-                alert("🎟️ ¡Límite de Cartelera Alcanzado!\n\nEn la versión gratis podés guardar hasta 5 títulos.\nTe redirigimos para conseguir el Pase VIP por $5 USD y guardar ilimitados.");
+                alert(
+                    "🎟️ ¡Llegaste al límite de 5 favoritos gratis!\n\n" +
+                    "¿Por qué existe este límite?\n" +
+                    "Mantener 'Dónde Te Veo' funcionando sin interrupciones, actualizando las plataformas de streaming en tiempo real y libre de anuncios molestos requiere recursos de servidores.\n\n" +
+                    "Con tu Pase VIP ($5 USD pago único) hacés posible que el proyecto siga vivo y desbloqueás:\n" +
+                    "• Guardado ilimitado de películas y series.\n" +
+                    "• Experiencia 100% limpia sin banners publicitarios.\n\n" +
+                    "Te estamos redirigiendo para activar tu pase VIP..."
+                );
                 window.location.href = GUMROAD_URL;
                 return;
             }
