@@ -3,64 +3,90 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>StreamFinder | ¿Dónde lo veo?</title>
+    <title>Dónde Te Veo | Cartelera de Streaming</title>
     <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
     <style>
-        body { background-color: #0f172a; color: white; font-family: system-ui, -apple-system, sans-serif; }
-        .glass { background: rgba(30, 41, 59, 0.7); backdrop-filter: blur(10px); }
+        body { 
+            background-color: #0d0d0d; 
+            color: #e5e5e5; 
+            font-family: 'Poppins', sans-serif; 
+        }
+        .font-cinema { 
+            font-family: 'Bebas Neue', sans-serif; 
+            letter-spacing: 2px;
+        }
+        .cinema-card {
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+        .cinema-card:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 10px 25px -5px rgba(229, 9, 20, 0.4);
+        }
     </style>
 </head>
-<body class="min-h-screen p-4 md:p-8">
+<body class="min-h-screen p-4 md:p-8 border-t-4 border-red-600">
 
-    <!-- Header -->
-    <header class="flex justify-between items-center mb-8 max-w-4xl mx-auto">
-        <h1 class="text-3xl font-bold">Stream<span class="text-emerald-500">Finder</span></h1>
-        <a href="TU_LINK_DE_GUMROAD_ACA" target="_blank" class="bg-emerald-500 hover:bg-emerald-600 text-slate-900 font-bold py-2 px-4 rounded-full transition">
-            Ser PRO ($5)
+    <!-- Header Estilo Cine -->
+    <header class="flex justify-between items-center mb-10 max-w-5xl mx-auto border-b border-zinc-800 pb-5">
+        <div class="flex items-center gap-2">
+            <span class="text-3xl">🍿</span>
+            <h1 class="text-4xl font-cinema tracking-wider text-white">
+                DÓNDE TE <span class="text-red-600">VEO</span>
+            </h1>
+        </div>
+        <a href="TU_LINK_DE_GUMROAD_ACA" target="_blank" class="bg-red-600 hover:bg-red-700 text-white font-bold py-2 px-5 rounded-md shadow-lg shadow-red-600/30 transition text-sm uppercase tracking-wider flex items-center gap-2">
+            <span>🎟️</span> Pasa VIP ($5)
         </a>
     </header>
 
-    <!-- Buscador -->
-    <main class="max-w-4xl mx-auto">
-        <div class="mb-8">
-            <input type="text" id="searchInput" placeholder="Buscá una película o serie..." 
-                   class="w-full bg-slate-800 text-white px-6 py-4 rounded-xl border border-slate-700 focus:outline-none focus:border-emerald-500 text-lg">
+    <!-- Buscador Principal -->
+    <main class="max-w-5xl mx-auto">
+        <div class="mb-10 text-center">
+            <h2 class="text-2xl md:text-3xl font-cinema text-zinc-300 mb-3">¿Qué querés ver hoy?</h2>
+            <div class="relative max-w-2xl mx-auto">
+                <input type="text" id="searchInput" placeholder="Buscá por película, serie o director..." 
+                       class="w-full bg-zinc-900 text-white px-6 py-4 rounded-xl border border-zinc-800 focus:outline-none focus:border-red-600 text-lg shadow-inner placeholder-zinc-500">
+                <span class="absolute right-5 top-4 text-zinc-500 text-xl">🔍</span>
+            </div>
         </div>
 
-        <!-- Banner de Publicidad (Simulado) -->
-        <div id="adBanner" class="bg-slate-800 p-4 rounded-lg text-center text-slate-400 mb-8 border border-dashed border-slate-600">
-            [ Espacio para Google AdSense / Banner Publicitario ] <br> <span class="text-xs">Removido en versión PRO</span>
+        <!-- Banner Publicitario Estilo Cartelera -->
+        <div id="adBanner" class="bg-zinc-900/80 p-4 rounded-xl text-center text-zinc-400 mb-10 border border-zinc-800 shadow-md">
+            <p class="text-xs uppercase tracking-widest text-amber-500 font-semibold mb-1">Espacio Publicitario</p>
+            <p class="text-sm text-zinc-400">[ Anuncios de cartelera ] — <span class="text-red-500">Removidos con el Pasa VIP</span></p>
         </div>
 
-        <!-- Resultados -->
-        <div id="results" class="grid grid-cols-2 md:grid-cols-4 gap-6">
-            <!-- Las películas aparecerán acá -->
+        <!-- Grid de Resultados -->
+        <div id="results" class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-6">
+            <!-- Las películas se cargan dinámicamente -->
         </div>
     </main>
 
-    <!-- Modal para "Dónde Ver" -->
-    <div id="modal" class="fixed inset-0 bg-black/80 hidden items-center justify-center p-4 z-50">
-        <div class="glass p-8 rounded-2xl max-w-md w-full relative border border-slate-700">
-            <button onclick="closeModal()" class="absolute top-4 right-4 text-slate-400 hover:text-white">✕</button>
-            <h2 id="modalTitle" class="text-2xl font-bold mb-2">Título</h2>
-            <p class="text-slate-400 mb-6">Disponible en Argentina en:</p>
-            <div id="providers" class="flex flex-wrap gap-4 justify-center">
-                <!-- Logos de plataformas -->
+    <!-- Modal Dónde Ver (Estilo Popcorn / Cine) -->
+    <div id="modal" class="fixed inset-0 bg-black/90 hidden items-center justify-center p-4 z-50 backdrop-blur-sm">
+        <div class="bg-zinc-900 p-6 md:p-8 rounded-2xl max-w-md w-full relative border border-zinc-800 shadow-2xl">
+            <button onclick="closeModal()" class="absolute top-4 right-4 text-zinc-400 hover:text-white text-xl">✕</button>
+            
+            <span class="bg-red-600/20 text-red-500 text-xs font-bold px-3 py-1 rounded-full uppercase tracking-wider mb-3 inline-block">Disponibilidad</span>
+            <h2 id="modalTitle" class="text-3xl font-cinema text-white mb-1">Título de la Película</h2>
+            <p class="text-zinc-400 text-sm mb-6">Plataformas de streaming disponibles:</p>
+            
+            <div id="providers" class="flex flex-wrap gap-4 justify-center py-4 bg-zinc-950/50 rounded-xl border border-zinc-800/50 mb-6 min-h-[100px] items-center">
+                <!-- Logos de las plataformas -->
             </div>
             
-            <button onclick="saveFavorite()" class="w-full mt-8 bg-slate-700 hover:bg-slate-600 text-white font-bold py-3 px-4 rounded-xl transition flex justify-center items-center gap-2">
-                ⭐ Guardar en Mis Listas
+            <button onclick="saveFavorite()" class="w-full bg-zinc-800 hover:bg-zinc-700 text-amber-400 font-semibold py-3 px-4 rounded-xl transition border border-amber-500/30 flex justify-center items-center gap-2">
+                ⭐ Guardar en mi Lista Favorita
             </button>
         </div>
     </div>
 
     <script>
-        // ⚠️ ACÁ VA TU API KEY DE TMDB
+        // ⚠️ ACÁ PEGAS TU API KEY DE TMDB CUANDO LA TENGAS
         const API_KEY = 'PEDI_TU_API_KEY_Y_PEGALA_ACA';
         let currentMovie = null;
-        
-        // Lógica de Favoritos y Límite Free
-        let isPro = false; // Cambiará a true si validamos el pago de Gumroad
+        let isPro = false; 
         let favorites = JSON.parse(localStorage.getItem('streamFavs')) || [];
 
         document.getElementById('searchInput').addEventListener('input', async (e) => {
@@ -82,11 +108,12 @@
             items.filter(item => item.poster_path).forEach(item => {
                 const type = item.media_type === 'tv' ? 'tv' : 'movie';
                 container.innerHTML += `
-                    <div class="bg-slate-800 rounded-xl overflow-hidden cursor-pointer hover:ring-2 ring-emerald-500 transition" 
+                    <div class="cinema-card bg-zinc-900 rounded-xl overflow-hidden cursor-pointer border border-zinc-800/80" 
                          onclick="openModal(${item.id}, '${type}', '${item.title || item.name}')">
-                        <img src="https://image.tmdb.org/t/p/w500${item.poster_path}" alt="Poster" class="w-full h-64 object-cover">
-                        <div class="p-3">
-                            <h3 class="font-bold truncate">${item.title || item.name}</h3>
+                        <img src="https://image.tmdb.org/t/p/w500${item.poster_path}" alt="Poster" class="w-full h-72 object-cover">
+                        <div class="p-3 bg-zinc-900">
+                            <h3 class="font-bold text-sm text-zinc-200 truncate">${item.title || item.name}</h3>
+                            <p class="text-xs text-red-500 mt-1 font-medium">${type === 'tv' ? '📺 Serie' : '🎬 Película'}</p>
                         </div>
                     </div>
                 `;
@@ -99,27 +126,25 @@
             document.getElementById('modal').classList.replace('hidden', 'flex');
             
             const provContainer = document.getElementById('providers');
-            provContainer.innerHTML = 'Buscando plataformas...';
+            provContainer.innerHTML = '<span class="text-zinc-500 text-sm">Consultando cartelera...</span>';
 
             try {
                 const res = await fetch(`https://api.themoviedb.org/3/${type}/${id}/watch/providers?api_key=${API_KEY}`);
                 const data = await res.json();
-                
-                // AR = Argentina. Podés usar geolocalización después.
                 const platforms = data.results?.AR?.flatrate || []; 
                 
                 if (platforms.length > 0) {
                     provContainer.innerHTML = platforms.map(p => `
-                        <div class="text-center">
-                            <img src="https://image.tmdb.org/t/p/w200${p.logo_path}" class="w-14 h-14 rounded-xl mb-1">
-                            <span class="text-xs text-slate-400">${p.provider_name}</span>
+                        <div class="text-center p-2">
+                            <img src="https://image.tmdb.org/t/p/w200${p.logo_path}" class="w-12 h-12 rounded-xl mb-1 shadow-md mx-auto border border-zinc-700">
+                            <span class="text-[10px] text-zinc-400 block truncate max-w-[60px]">${p.provider_name}</span>
                         </div>
                     `).join('');
                 } else {
-                    provContainer.innerHTML = '<p class="text-red-400">No disponible en streaming por suscripción acá.</p>';
+                    provContainer.innerHTML = '<p class="text-zinc-500 text-sm p-4">No está disponible en streaming por suscripción en tu región.</p>';
                 }
             } catch (error) {
-                provContainer.innerHTML = 'Error al cargar plataformas.';
+                provContainer.innerHTML = '<p class="text-red-400 text-sm">Error al cargar plataformas.</p>';
             }
         }
 
@@ -129,17 +154,16 @@
 
         function saveFavorite() {
             if (!isPro && favorites.length >= 5) {
-                alert("¡Límite alcanzado! 🔒\nEn la versión gratis podés guardar hasta 5 títulos.\nHacete PRO por $5 para guardar ilimitados y quitar los anuncios.");
-                // Acá podrías redirigir a Gumroad directo
+                alert("🎟️ ¡Límite de Cartelera Alcanzado!\n\nEn la versión gratis podés guardar hasta 5 títulos.\nConseguí el Pasa VIP por $5 USD para guardar ilimitados y quitar anuncios.");
                 return;
             }
             
             if (!favorites.some(f => f.id === currentMovie.id)) {
                 favorites.push(currentMovie);
                 localStorage.setItem('streamFavs', JSON.stringify(favorites));
-                alert(`"${currentMovie.title}" guardado con éxito. (Tenés ${favorites.length} guardados)`);
+                alert(`🍿 "${currentMovie.title}" guardada en tus listas (${favorites.length}/5).`);
             } else {
-                alert("Esta película ya está en tus listas.");
+                alert("Esta peli/serie ya está en tu lista.");
             }
         }
     </script>
