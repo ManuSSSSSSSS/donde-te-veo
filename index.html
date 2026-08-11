@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>StreamFinder | ¿Dónde lo veo?</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        body { background-color: #0f172a; color: white; font-family: system-ui, -apple-system, sans-serif; }
+        .glass { background: rgba(30, 41, 59, 0.7); backdrop-filter: blur(10px); }
+    </style>
+</head>
+<body class="min-h-screen p-4 md:p-8">
+
+    <!-- Header -->
+    <header class="flex justify-between items-center mb-8 max-w-4xl mx-auto">
+        <h1 class="text-3xl font-bold">Stream<span class="text-emerald-500">Finder</span></h1>
+        <a href="TU_LINK_DE_GUMROAD_ACA" target="_blank" class="bg-emerald-500 hover:bg-emerald-600 text-slate-900 font-bold py-2 px-4 rounded-full transition">
+            Ser PRO ($5)
+        </a>
+    </header>
+
+    <!-- Buscador -->
+    <main class="max-w-4xl mx-auto">
+        <div class="mb-8">
+            <input type="text" id="searchInput" placeholder="Buscá una película o serie..." 
+                   class="w-full bg-slate-800 text-white px-6 py-4 rounded-xl border border-slate-700 focus:outline-none focus:border-emerald-500 text-lg">
+        </div>
+
+        <!-- Banner de Publicidad (Simulado) -->
+        <div id="adBanner" class="bg-slate-800 p-4 rounded-lg text-center text-slate-400 mb-8 border border-dashed border-slate-600">
+            [ Espacio para Google AdSense / Banner Publicitario ] <br> <span class="text-xs">Removido en versión PRO</span>
+        </div>
+
+        <!-- Resultados -->
+        <div id="results" class="grid grid-cols-2 md:grid-cols-4 gap-6">
+            <!-- Las películas aparecerán acá -->
+        </div>
+    </main>
+
+    <!-- Modal para "Dónde Ver" -->
+    <div id="modal" class="fixed inset-0 bg-black/80 hidden items-center justify-center p-4 z-50">
+        <div class="glass p-8 rounded-2xl max-w-md w-full relative border border-slate-700">
+            <button onclick="closeModal()" class="absolute top-4 right-4 text-slate-400 hover:text-white">✕</button>
+            <h2 id="modalTitle" class="text-2xl font-bold mb-2">Título</h2>
+            <p class="text-slate-400 mb-6">Disponible en Argentina en:</p>
+            <div id="providers" class="flex flex-wrap gap-4 justify-center">
+                <!-- Logos de plataformas -->
+            </div>
+            
+            <button onclick="saveFavorite()" class="w-full mt-8 bg-slate-700 hover:bg-slate-600 text-white font-bold py-3 px-4 rounded-xl transition flex justify-center items-center gap-2">
+                ⭐ Guardar en Mis Listas
+            </button>
+        </div>
+    </div>
+
+    <script>
+        // ⚠️ ACÁ VA TU API KEY DE TMDB
+        const API_KEY = 'PEDI_TU_API_KEY_Y_PEGALA_ACA';
+        let currentMovie = null;
+        
+        // Lógica de Favoritos y Límite Free
+        let isPro = false; // Cambiará a true si validamos el pago de Gumroad
+        let favorites = JSON.parse(localStorage.getItem('streamFavs')) || [];
+
+        document.getElementById('searchInput').addEventListener('input', async (e) => {
+            if (e.target.value.length < 3) return;
+            
+            try {
+                const res = await fetch(`https://api.themoviedb.org/3/search/multi?api_key=${API_KEY}&language=es-AR&query=${e.target.value}`);
+                const data = await res.json();
+                renderResults(data.results);
+            } catch (error) {
+                console.log("Error buscando:", error);
+            }
+        });
+
+        function renderResults(items) {
+            const container = document.getElementById('results');
+            container.innerHTML = '';
+            
+            items.filter(item => item.poster_path).forEach(item => {
+                const type = item.media_type === 'tv' ? 'tv' : 'movie';
+                container.innerHTML += `
+                    <div class="bg-slate-800 rounded-xl overflow-hidden cursor-pointer hover:ring-2 ring-emerald-500 transition" 
+                         onclick="openModal(${item.id}, '${type}', '${item.title || item.name}')">
+                        <img src="https://image.tmdb.org/t/p/w500${item.poster_path}" alt="Poster" class="w-full h-64 object-cover">
+                        <div class="p-3">
+                            <h3 class="font-bold truncate">${item.title || item.name}</h3>
+                        </div>
+                    </div>
+                `;
+            });
+        }
+
+        async function openModal(id, type, title) {
+            currentMovie = { id, title };
+            document.getElementById('modalTitle').innerText = title;
+            document.getElementById('modal').classList.replace('hidden', 'flex');
+            
+            const provContainer = document.getElementById('providers');
+            provContainer.innerHTML = 'Buscando plataformas...';
+
+            try {
+                const res = await fetch(`https://api.themoviedb.org/3/${type}/${id}/watch/providers?api_key=${API_KEY}`);
+                const data = await res.json();
+                
+                // AR = Argentina. Podés usar geolocalización después.
+                const platforms = data.results?.AR?.flatrate || []; 
+                
+                if (platforms.length > 0) {
+                    provContainer.innerHTML = platforms.map(p => `
+                        <div class="text-center">
+                            <img src="https://image.tmdb.org/t/p/w200${p.logo_path}" class="w-14 h-14 rounded-xl mb-1">
+                            <span class="text-xs text-slate-400">${p.provider_name}</span>
+                        </div>
+                    `).join('');
+                } else {
+                    provContainer.innerHTML = '<p class="text-red-400">No disponible en streaming por suscripción acá.</p>';
+                }
+            } catch (error) {
+                provContainer.innerHTML = 'Error al cargar plataformas.';
+            }
+        }
+
+        function closeModal() {
+            document.getElementById('modal').classList.replace('flex', 'hidden');
+        }
+
+        function saveFavorite() {
+            if (!isPro && favorites.length >= 5) {
+                alert("¡Límite alcanzado! 🔒\nEn la versión gratis podés guardar hasta 5 títulos.\nHacete PRO por $5 para guardar ilimitados y quitar los anuncios.");
+                // Acá podrías redirigir a Gumroad directo
+                return;
+            }
+            
+            if (!favorites.some(f => f.id === currentMovie.id)) {
+                favorites.push(currentMovie);
+                localStorage.setItem('streamFavs', JSON.stringify(favorites));
+                alert(`"${currentMovie.title}" guardado con éxito. (Tenés ${favorites.length} guardados)`);
+            } else {
+                alert("Esta película ya está en tus listas.");
+            }
+        }
+    </script>
+</body>
+</html>
