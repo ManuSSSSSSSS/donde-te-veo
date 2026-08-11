@@ -6,6 +6,9 @@
     <title>Dónde Te Veo | Cartelera de Streaming</title>
     <script src="https://cdn.tailwindcss.com"></script>
     
+    <!-- Favicon Emoji 🍿 -->
+    <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🍿</text></svg>">
+
     <!-- Script de Gumroad para Checkout Flotante -->
     <script src="https://gumroad.com/js/gumroad.js"></script>
 
@@ -30,23 +33,36 @@
             transform: translateY(-8px);
             box-shadow: 0 10px 25px -5px rgba(229, 9, 20, 0.4);
         }
+        /* Oculta recuadros blancos mientras AdSense aprueba el anuncio */
+        ins.adsbygoogle {
+            background: transparent !important;
+        }
     </style>
 </head>
 <body class="min-h-screen p-4 md:p-8 border-t-4 border-red-600">
 
     <!-- Header Estilo Cine -->
     <header class="flex justify-between items-center mb-10 max-w-5xl mx-auto border-b border-zinc-800 pb-5">
-        <div class="flex items-center gap-2">
+        <!-- Clic para volver a la pantalla principal -->
+        <div onclick="goHome()" class="flex items-center gap-2 cursor-pointer hover:opacity-80 transition" title="Volver al inicio">
             <span class="text-3xl">🍿</span>
             <h1 class="text-4xl font-cinema tracking-wider text-white">
                 DÓNDE TE <span class="text-red-600">VEO</span>
             </h1>
         </div>
-        <!-- Botón de compra flotante -->
-        <a class="gumroad-button bg-red-600 hover:bg-red-700 text-white font-bold py-2 px-5 rounded-md shadow-lg shadow-red-600/30 transition text-sm uppercase tracking-wider flex items-center gap-2 cursor-pointer" 
-           href="https://manusaldias.gumroad.com/l/ufquvf">
-            <span>🎟️</span> Pase VIP ($5)
-        </a>
+        
+        <div class="flex items-center gap-3">
+            <!-- Botón para ver Mis Favoritos -->
+            <button onclick="openFavoritesModal()" class="bg-zinc-800 hover:bg-zinc-700 text-amber-400 font-bold py-2 px-4 rounded-md border border-amber-500/30 transition text-sm flex items-center gap-2">
+                <span>⭐</span> <span class="hidden sm:inline">Mis</span> Favoritos
+            </button>
+            
+            <!-- Botón Pase VIP Flotante -->
+            <a class="gumroad-button bg-red-600 hover:bg-red-700 text-white font-bold py-2 px-4 rounded-md shadow-lg shadow-red-600/30 transition text-sm uppercase tracking-wider flex items-center gap-2 cursor-pointer" 
+               href="https://manusaldias.gumroad.com/l/ufquvf">
+                <span>🎟️</span> Pase VIP ($5)
+            </a>
+        </div>
     </header>
 
     <!-- Buscador Principal -->
@@ -97,6 +113,19 @@
         </div>
     </div>
 
+    <!-- Modal Lista de Favoritos -->
+    <div id="favsModal" class="fixed inset-0 bg-black/90 hidden items-center justify-center p-4 z-50 backdrop-blur-sm">
+        <div class="bg-zinc-900 p-6 md:p-8 rounded-2xl max-w-lg w-full relative border border-zinc-800 shadow-2xl max-h-[80vh] flex flex-col">
+            <button onclick="closeFavsModal()" class="absolute top-4 right-4 text-zinc-400 hover:text-white text-xl">✕</button>
+            
+            <h2 class="text-3xl font-cinema text-amber-400 mb-4 flex items-center gap-2">⭐ Mi Lista Favorita</h2>
+            
+            <div id="favsList" class="overflow-y-auto flex-1 space-y-3 pr-2">
+                <!-- Se cargan dinámicamente los favoritos -->
+            </div>
+        </div>
+    </div>
+
     <script>
         const API_KEY = '1da7abd40ce7f268d31e9e626fa6cc6b';
         const GUMROAD_URL = 'https://manusaldias.gumroad.com/l/ufquvf';
@@ -104,6 +133,12 @@
         let currentMovie = null;
         let isPro = false; 
         let favorites = JSON.parse(localStorage.getItem('streamFavs')) || [];
+
+        // Función para volver al inicio
+        function goHome() {
+            document.getElementById('searchInput').value = '';
+            document.getElementById('results').innerHTML = '';
+        }
 
         document.getElementById('searchInput').addEventListener('input', async (e) => {
             const val = e.target.value.trim();
@@ -138,7 +173,7 @@
         }
 
         async function openModal(id, type, title) {
-            currentMovie = { id, title };
+            currentMovie = { id, title, type };
             document.getElementById('modalTitle').innerText = title;
             document.getElementById('modal').classList.replace('hidden', 'flex');
             
@@ -191,6 +226,34 @@
             } else {
                 alert("Esta peli/serie ya está en tu lista.");
             }
+        }
+
+        // Lógica para abrir y ver la lista de favoritos
+        function openFavoritesModal() {
+            const container = document.getElementById('favsList');
+            if (favorites.length === 0) {
+                container.innerHTML = '<p class="text-zinc-500 text-center py-8">Todavía no guardaste ningún título en tu lista.</p>';
+            } else {
+                container.innerHTML = favorites.map((fav, index) => `
+                    <div class="flex justify-between items-center bg-zinc-950 p-3 rounded-xl border border-zinc-800">
+                        <span class="font-semibold text-zinc-200 text-sm">${fav.title}</span>
+                        <button onclick="removeFavorite(${index})" class="text-red-500 hover:text-red-400 text-xs bg-red-500/10 hover:bg-red-500/20 px-2 py-1 rounded transition">
+                            Eliminar
+                        </button>
+                    </div>
+                `).join('');
+            }
+            document.getElementById('favsModal').classList.replace('hidden', 'flex');
+        }
+
+        function closeFavsModal() {
+            document.getElementById('favsModal').classList.replace('flex', 'hidden');
+        }
+
+        function removeFavorite(index) {
+            favorites.splice(index, 1);
+            localStorage.setItem('streamFavs', JSON.stringify(favorites));
+            openFavoritesModal();
         }
     </script>
 </body>
