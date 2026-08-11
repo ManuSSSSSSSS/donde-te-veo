@@ -5,6 +5,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Dónde Te Veo | Cartelera de Streaming</title>
     <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Script de Gumroad para Checkout Flotante -->
+    <script src="https://gumroad.com/js/gumroad.js"></script>
     <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
     <style>
         body { 
@@ -35,7 +37,9 @@
                 DÓNDE TE <span class="text-red-600">VEO</span>
             </h1>
         </div>
-        <a href="https://manusaldias.gumroad.com/l/ufquvf" target="_blank" class="bg-red-600 hover:bg-red-700 text-white font-bold py-2 px-5 rounded-md shadow-lg shadow-red-600/30 transition text-sm uppercase tracking-wider flex items-center gap-2">
+        <!-- Botón de compra flotante -->
+        <a class="gumroad-button bg-red-600 hover:bg-red-700 text-white font-bold py-2 px-5 rounded-md shadow-lg shadow-red-600/30 transition text-sm uppercase tracking-wider flex items-center gap-2 cursor-pointer" 
+           href="https://manusaldias.gumroad.com/l/ufquvf">
             <span>🎟️</span> Pase VIP ($5)
         </a>
     </header>
@@ -51,8 +55,8 @@
             </div>
         </div>
 
-        <!-- Banner Publicitario Estilo Cartelera -->
-        <div id="adBanner" class="bg-zinc-900/80 p-4 rounded-xl text-center text-zinc-400 mb-10 border border-zinc-800 shadow-md">
+        <!-- Banner Publicitario (Espacio para Google AdSense) -->
+        <div id="adBanner" class="bg-zinc-900/80 p-4 rounded-xl text-center text-zinc-400 mb-10 border border-zinc-800 shadow-md min-h-[90px] flex flex-col justify-center items-center">
             <p class="text-xs uppercase tracking-widest text-amber-500 font-semibold mb-1">Espacio Publicitario</p>
             <p class="text-sm text-zinc-400">[ Anuncios de cartelera ] — <span class="text-red-500">Removidos con el Pase VIP</span></p>
         </div>
@@ -63,7 +67,7 @@
         </div>
     </main>
 
-    <!-- Modal Dónde Ver (Estilo Popcorn / Cine) -->
+    <!-- Modal Dónde Ver -->
     <div id="modal" class="fixed inset-0 bg-black/90 hidden items-center justify-center p-4 z-50 backdrop-blur-sm">
         <div class="bg-zinc-900 p-6 md:p-8 rounded-2xl max-w-md w-full relative border border-zinc-800 shadow-2xl">
             <button onclick="closeModal()" class="absolute top-4 right-4 text-zinc-400 hover:text-white text-xl">✕</button>
@@ -83,17 +87,19 @@
     </div>
 
     <script>
-        // ⚠️ ACÁ PEGAS TU API KEY DE TMDB CUANDO LA TENGAS
         const API_KEY = '1da7abd40ce7f268d31e9e626fa6cc6b';
+        const GUMROAD_URL = 'https://manusaldias.gumroad.com/l/ufquvf';
+
         let currentMovie = null;
         let isPro = false; 
         let favorites = JSON.parse(localStorage.getItem('streamFavs')) || [];
 
         document.getElementById('searchInput').addEventListener('input', async (e) => {
-            if (e.target.value.length < 3) return;
+            const val = e.target.value.trim();
+            if (val.length < 3) return;
             
             try {
-                const res = await fetch(`https://api.themoviedb.org/3/search/multi?api_key=${API_KEY}&language=es-AR&query=${e.target.value}`);
+                const res = await fetch(`https://api.themoviedb.org/3/search/multi?api_key=${API_KEY}&language=es-AR&query=${val}`);
                 const data = await res.json();
                 renderResults(data.results);
             } catch (error) {
@@ -154,7 +160,8 @@
 
         function saveFavorite() {
             if (!isPro && favorites.length >= 5) {
-                alert("🎟️ ¡Límite de Cartelera Alcanzado!\n\nEn la versión gratis podés guardar hasta 5 títulos.\nConseguí el Pasa VIP por $5 USD para guardar ilimitados y quitar anuncios.");
+                alert("🎟️ ¡Límite de Cartelera Alcanzado!\n\nEn la versión gratis podés guardar hasta 5 títulos.\nTe redirigimos para conseguir el Pase VIP por $5 USD y guardar ilimitados.");
+                window.location.href = GUMROAD_URL;
                 return;
             }
             
