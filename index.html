@@ -7,8 +7,6 @@
     <title>Dónde Te Veo | Cartelera de Streaming</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🍿</text></svg>">
-    
-    <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🍿</text></svg>">
 
     <script src="https://gumroad.com/js/gumroad.js"></script>
 
@@ -26,11 +24,11 @@
             letter-spacing: 2px;
         }
         .cinema-card {
-            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            transition: transform 0.2s ease, box-shadow 0.2s ease;
         }
-        .cinema-card:hover {
-            transform: translateY(-8px);
-            box-shadow: 0 10px 25px -5px rgba(229, 9, 20, 0.4);
+        .cinema-card:active, .cinema-card:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 8px 20px -5px rgba(229, 9, 20, 0.4);
         }
         /* Oculta recuadros blancos mientras AdSense aprueba el anuncio */
         ins.adsbygoogle {
@@ -38,75 +36,89 @@
         }
     </style>
 </head>
-<body class="min-h-screen p-4 md:p-8 border-t-4 border-red-600">
+<body class="min-h-screen p-3 sm:p-6 md:p-8 border-t-4 border-red-600 flex flex-col justify-between">
 
-    <!-- Header Estilo Cine -->
-    <header class="flex justify-between items-center mb-10 max-w-5xl mx-auto border-b border-zinc-800 pb-5">
-        <!-- Clic para volver a la pantalla principal -->
-        <div onclick="goHome()" class="flex items-center gap-2 cursor-pointer hover:opacity-80 transition" title="Volver al inicio">
-            <span class="text-3xl">🍿</span>
-            <h1 class="text-4xl font-cinema tracking-wider text-white">
-                DÓNDE TE <span class="text-red-600">VEO?</span>
-            </h1>
-        </div>
-        
-        <div class="flex items-center gap-3">
-            <!-- Botón para ver Mis Favoritos -->
-            <button onclick="openFavoritesModal()" class="bg-zinc-800 hover:bg-zinc-700 text-amber-400 font-bold py-2 px-4 rounded-md border border-amber-500/30 transition text-sm flex items-center gap-2">
-                <span>⭐</span> <span class="hidden sm:inline">Mis</span> Favoritos
-            </button>
-            
-            <!-- Botón Pase VIP Flotante -->
-            <a class="gumroad-button bg-red-600 hover:bg-red-700 text-white font-bold py-2 px-4 rounded-md shadow-lg shadow-red-600/30 transition text-sm uppercase tracking-wider flex items-center gap-2 cursor-pointer" 
-               href="https://manusaldias.gumroad.com/l/ufquvf">
-                <span>🎟️</span> Pase VIP ($5)
-            </a>
-        </div>
-    </header>
-
-    <!-- Buscador Principal -->
-    <main class="max-w-5xl mx-auto">
-        <div class="mb-10 text-center">
-            <h2 class="text-2xl md:text-3xl font-cinema text-zinc-300 mb-3">¿Qué querés ver hoy?</h2>
-            <div class="relative max-w-2xl mx-auto">
-                <input type="text" id="searchInput" placeholder="Buscá por película, serie o director..." 
-                       class="w-full bg-zinc-900 text-white px-6 py-4 rounded-xl border border-zinc-800 focus:outline-none focus:border-red-600 text-lg shadow-inner placeholder-zinc-500">
-                <span class="absolute right-5 top-4 text-zinc-500 text-xl">🔍</span>
+    <div class="max-w-5xl mx-auto w-full">
+        <!-- Header Estilo Cine & Mobile Responsive -->
+        <header class="flex flex-col sm:flex-row justify-between items-center gap-4 mb-6 sm:mb-10 border-b border-zinc-800 pb-4">
+            <!-- Clic para volver a la pantalla principal -->
+            <div onclick="goHome()" class="flex items-center gap-2 cursor-pointer hover:opacity-80 transition" title="Volver al inicio">
+                <span class="text-3xl">🍿</span>
+                <h1 class="text-3xl sm:text-4xl font-cinema tracking-wider text-white">
+                    DÓNDE TE <span class="text-red-600">VEO?</span>
+                </h1>
             </div>
-        </div>
+            
+            <div class="flex items-center gap-2 sm:gap-3 w-full sm:w-auto justify-between sm:justify-end">
+                <!-- Selector de País -->
+                <select id="countrySelect" onchange="changeCountry(this.value)" class="bg-zinc-900 border border-zinc-700 text-zinc-300 text-xs sm:text-sm rounded-lg p-2 focus:outline-none focus:border-red-600">
+                    <option value="AR">🇦🇷 Argentina</option>
+                    <option value="MX">🇲🇽 México</option>
+                    <option value="ES">🇪🇸 España</option>
+                    <option value="US">🇺🇸 EE.UU.</option>
+                    <option value="CL">🇨🇱 Chile</option>
+                    <option value="CO">🇨🇴 Colombia</option>
+                    <option value="PE">🇵🇪 Perú</option>
+                    <option value="UY">🇺🇾 Uruguay</option>
+                </select>
 
-        <!-- Banner Publicitario Real con AdSense -->
-        <div id="adBanner" class="bg-zinc-900/80 p-2 rounded-xl text-center text-zinc-400 mb-10 border border-zinc-800 shadow-md min-h-[90px] flex flex-col justify-center items-center overflow-hidden">
-            <ins class="adsbygoogle"
-                 style="display:block"
-                 data-ad-client="ca-pub-8040246767660046"
-                 data-ad-format="auto"
-                 data-full-width-responsive="true"></ins>
-            <script>
-                 (adsbygoogle = window.adsbygoogle || []).push({});
-            </script>
-        </div>
+                <!-- Botón para ver Mis Favoritos -->
+                <button onclick="openFavoritesModal()" class="bg-zinc-800 hover:bg-zinc-700 text-amber-400 font-bold py-2 px-3 sm:px-4 rounded-lg border border-amber-500/30 transition text-xs sm:text-sm flex items-center gap-1 sm:gap-2">
+                    <span>⭐</span> <span>Favs</span>
+                </button>
+                
+                <!-- Botón Pase VIP Flotante -->
+                <a class="gumroad-button bg-red-600 hover:bg-red-700 text-white font-bold py-2 px-3 sm:px-4 rounded-lg shadow-lg shadow-red-600/30 transition text-xs sm:text-sm uppercase tracking-wider flex items-center gap-1 sm:gap-2 cursor-pointer whitespace-nowrap" 
+                   href="https://manusaldias.gumroad.com/l/ufquvf">
+                    <span>🎟️</span> <span>VIP</span>
+                </a>
+            </div>
+        </header>
 
-        <!-- Grid de Resultados -->
-        <div id="results" class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-6">
-            <!-- Las películas se cargan dinámicamente -->
-        </div>
-    </main>
+        <!-- Buscador Principal -->
+        <main>
+            <div class="mb-6 sm:mb-10 text-center">
+                <h2 class="text-xl sm:text-3xl font-cinema text-zinc-300 mb-2 sm:mb-3">¿Qué querés ver hoy?</h2>
+                <div class="relative max-w-2xl mx-auto">
+                    <input type="text" id="searchInput" placeholder="Buscá por película, serie o director..." 
+                           class="w-full bg-zinc-900 text-white pl-4 pr-10 py-3 sm:py-4 rounded-xl border border-zinc-800 focus:outline-none focus:border-red-600 text-base sm:text-lg shadow-inner placeholder-zinc-500">
+                    <span class="absolute right-3 top-3.5 sm:top-4 text-zinc-500 text-lg sm:text-xl">🔍</span>
+                </div>
+            </div>
+
+            <!-- Banner Publicitario Real con AdSense -->
+            <div id="adBanner" class="bg-zinc-900/80 p-2 rounded-xl text-center text-zinc-400 mb-6 sm:mb-10 border border-zinc-800 shadow-md min-h-[90px] flex flex-col justify-center items-center overflow-hidden">
+                <ins class="adsbygoogle"
+                     style="display:block"
+                     data-ad-client="ca-pub-8040246767660046"
+                     data-ad-format="auto"
+                     data-full-width-responsive="true"></ins>
+                <script>
+                     (adsbygoogle = window.adsbygoogle || []).push({});
+                </script>
+            </div>
+
+            <!-- Grid de Resultados Adaptado a Celular (2 columnas en cel) -->
+            <div id="results" class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-3 sm:gap-6">
+                <!-- Las películas se cargan dinámicamente -->
+            </div>
+        </main>
+    </div>
 
     <!-- Modal Dónde Ver -->
     <div id="modal" class="fixed inset-0 bg-black/90 hidden items-center justify-center p-4 z-50 backdrop-blur-sm">
-        <div class="bg-zinc-900 p-6 md:p-8 rounded-2xl max-w-md w-full relative border border-zinc-800 shadow-2xl">
-            <button onclick="closeModal()" class="absolute top-4 right-4 text-zinc-400 hover:text-white text-xl">✕</button>
+        <div class="bg-zinc-900 p-5 sm:p-8 rounded-2xl max-w-md w-full relative border border-zinc-800 shadow-2xl">
+            <button onclick="closeModal()" class="absolute top-3 right-3 sm:top-4 sm:right-4 text-zinc-400 hover:text-white text-2xl p-1">✕</button>
             
-            <span class="bg-red-600/20 text-red-500 text-xs font-bold px-3 py-1 rounded-full uppercase tracking-wider mb-3 inline-block">Disponibilidad</span>
-            <h2 id="modalTitle" class="text-3xl font-cinema text-white mb-1">Título de la Película</h2>
-            <p class="text-zinc-400 text-sm mb-6">Plataformas de streaming disponibles:</p>
+            <span class="bg-red-600/20 text-red-500 text-[10px] sm:text-xs font-bold px-3 py-1 rounded-full uppercase tracking-wider mb-2 inline-block">Disponibilidad</span>
+            <h2 id="modalTitle" class="text-2xl sm:text-3xl font-cinema text-white mb-1 leading-tight">Título de la Película</h2>
+            <p id="modalRegionText" class="text-zinc-400 text-xs sm:text-sm mb-4">Plataformas de streaming disponibles:</p>
             
-            <div id="providers" class="flex flex-wrap gap-4 justify-center py-4 bg-zinc-950/50 rounded-xl border border-zinc-800/50 mb-6 min-h-[100px] items-center">
+            <div id="providers" class="flex flex-wrap gap-3 justify-center py-4 bg-zinc-950/50 rounded-xl border border-zinc-800/50 mb-5 min-h-[100px] items-center">
                 <!-- Logos de las plataformas -->
             </div>
             
-            <button onclick="saveFavorite()" class="w-full bg-zinc-800 hover:bg-zinc-700 text-amber-400 font-semibold py-3 px-4 rounded-xl transition border border-amber-500/30 flex justify-center items-center gap-2">
+            <button onclick="saveFavorite()" class="w-full bg-zinc-800 hover:bg-zinc-700 text-amber-400 font-semibold py-3 px-4 rounded-xl transition border border-amber-500/30 flex justify-center items-center gap-2 text-sm sm:text-base">
                 ⭐ Guardar en mi Lista Favorita
             </button>
         </div>
@@ -114,12 +126,12 @@
 
     <!-- Modal Lista de Favoritos -->
     <div id="favsModal" class="fixed inset-0 bg-black/90 hidden items-center justify-center p-4 z-50 backdrop-blur-sm">
-        <div class="bg-zinc-900 p-6 md:p-8 rounded-2xl max-w-lg w-full relative border border-zinc-800 shadow-2xl max-h-[80vh] flex flex-col">
-            <button onclick="closeFavsModal()" class="absolute top-4 right-4 text-zinc-400 hover:text-white text-xl">✕</button>
+        <div class="bg-zinc-900 p-5 sm:p-8 rounded-2xl max-w-lg w-full relative border border-zinc-800 shadow-2xl max-h-[80vh] flex flex-col">
+            <button onclick="closeFavsModal()" class="absolute top-3 right-3 sm:top-4 sm:right-4 text-zinc-400 hover:text-white text-2xl p-1">✕</button>
             
-            <h2 class="text-3xl font-cinema text-amber-400 mb-4 flex items-center gap-2">⭐ Mi Lista Favorita</h2>
+            <h2 class="text-2xl sm:text-3xl font-cinema text-amber-400 mb-4 flex items-center gap-2">⭐ Mi Lista Favorita</h2>
             
-            <div id="favsList" class="overflow-y-auto flex-1 space-y-3 pr-2">
+            <div id="favsList" class="overflow-y-auto flex-1 space-y-2.5 pr-1">
                 <!-- Se cargan dinámicamente los favoritos -->
             </div>
         </div>
@@ -131,7 +143,30 @@
 
         let currentMovie = null;
         let isPro = false; 
+        let userCountry = 'AR'; // Por defecto
         let favorites = JSON.parse(localStorage.getItem('streamFavs')) || [];
+
+        // Detectar País por IP al iniciar
+        async function detectUserCountry() {
+            try {
+                const res = await fetch('https://ipapi.co/json/');
+                const data = await res.json();
+                if (data && data.country_code) {
+                    userCountry = data.country_code;
+                    const select = document.getElementById('countrySelect');
+                    if ([...select.options].some(o => o.value === userCountry)) {
+                        select.value = userCountry;
+                    }
+                }
+            } catch (error) {
+                console.log("No se pudo detectar la IP, usando país por defecto (AR).");
+            }
+        }
+        detectUserCountry();
+
+        function changeCountry(code) {
+            userCountry = code;
+        }
 
         // Función para volver al inicio
         function goHome() {
@@ -161,10 +196,10 @@
                 container.innerHTML += `
                     <div class="cinema-card bg-zinc-900 rounded-xl overflow-hidden cursor-pointer border border-zinc-800/80" 
                          onclick="openModal(${item.id}, '${type}', '${item.title || item.name}')">
-                        <img src="https://image.tmdb.org/t/p/w500${item.poster_path}" alt="Poster" class="w-full h-72 object-cover">
-                        <div class="p-3 bg-zinc-900">
-                            <h3 class="font-bold text-sm text-zinc-200 truncate">${item.title || item.name}</h3>
-                            <p class="text-xs text-red-500 mt-1 font-medium">${type === 'tv' ? '📺 Serie' : '🎬 Película'}</p>
+                        <img src="https://image.tmdb.org/t/p/w500${item.poster_path}" alt="Poster" class="w-full h-56 sm:h-72 object-cover">
+                        <div class="p-2 sm:p-3 bg-zinc-900">
+                            <h3 class="font-bold text-xs sm:text-sm text-zinc-200 truncate">${item.title || item.name}</h3>
+                            <p class="text-[10px] sm:text-xs text-red-500 mt-0.5 font-medium">${type === 'tv' ? '📺 Serie' : '🎬 Película'}</p>
                         </div>
                     </div>
                 `;
@@ -174,28 +209,32 @@
         async function openModal(id, type, title) {
             currentMovie = { id, title, type };
             document.getElementById('modalTitle').innerText = title;
+            document.getElementById('modalRegionText').innerText = `Plataformas disponibles (${userCountry}):`;
             document.getElementById('modal').classList.replace('hidden', 'flex');
             
             const provContainer = document.getElementById('providers');
-            provContainer.innerHTML = '<span class="text-zinc-500 text-sm">Consultando cartelera...</span>';
+            provContainer.innerHTML = '<span class="text-zinc-500 text-xs sm:text-sm">Consultando cartelera...</span>';
 
             try {
                 const res = await fetch(`https://api.themoviedb.org/3/${type}/${id}/watch/providers?api_key=${API_KEY}`);
                 const data = await res.json();
-                const platforms = data.results?.AR?.flatrate || []; 
+                
+                // Obtiene las plataformas según el país seleccionado/detectado
+                const regionData = data.results?.[userCountry];
+                const platforms = regionData?.flatrate || regionData?.rent || []; 
                 
                 if (platforms.length > 0) {
                     provContainer.innerHTML = platforms.map(p => `
-                        <div class="text-center p-2">
-                            <img src="https://image.tmdb.org/t/p/w200${p.logo_path}" class="w-12 h-12 rounded-xl mb-1 shadow-md mx-auto border border-zinc-700">
-                            <span class="text-[10px] text-zinc-400 block truncate max-w-[60px]">${p.provider_name}</span>
+                        <div class="text-center p-1.5">
+                            <img src="https://image.tmdb.org/t/p/w200${p.logo_path}" class="w-10 h-10 sm:w-12 sm:h-12 rounded-xl mb-1 shadow-md mx-auto border border-zinc-700">
+                            <span class="text-[9px] sm:text-[10px] text-zinc-400 block truncate max-w-[55px] sm:max-w-[60px]">${p.provider_name}</span>
                         </div>
                     `).join('');
                 } else {
-                    provContainer.innerHTML = '<p class="text-zinc-500 text-sm p-4">No está disponible en streaming por suscripción en tu región.</p>';
+                    provContainer.innerHTML = `<p class="text-zinc-500 text-xs sm:text-sm p-4 text-center">No está disponible en streaming por suscripción en esta región (${userCountry}).</p>`;
                 }
             } catch (error) {
-                provContainer.innerHTML = '<p class="text-red-400 text-sm">Error al cargar plataformas.</p>';
+                provContainer.innerHTML = '<p class="text-red-400 text-xs sm:text-sm">Error al cargar plataformas.</p>';
             }
         }
 
@@ -231,12 +270,12 @@
         function openFavoritesModal() {
             const container = document.getElementById('favsList');
             if (favorites.length === 0) {
-                container.innerHTML = '<p class="text-zinc-500 text-center py-8">Todavía no guardaste ningún título en tu lista.</p>';
+                container.innerHTML = '<p class="text-zinc-500 text-center py-8 text-xs sm:text-sm">Todavía no guardaste ningún título en tu lista.</p>';
             } else {
                 container.innerHTML = favorites.map((fav, index) => `
-                    <div class="flex justify-between items-center bg-zinc-950 p-3 rounded-xl border border-zinc-800">
-                        <span class="font-semibold text-zinc-200 text-sm">${fav.title}</span>
-                        <button onclick="removeFavorite(${index})" class="text-red-500 hover:text-red-400 text-xs bg-red-500/10 hover:bg-red-500/20 px-2 py-1 rounded transition">
+                    <div class="flex justify-between items-center bg-zinc-950 p-2.5 sm:p-3 rounded-xl border border-zinc-800">
+                        <span class="font-semibold text-zinc-200 text-xs sm:text-sm truncate max-w-[70%]">${fav.title}</span>
+                        <button onclick="removeFavorite(${index})" class="text-red-500 hover:text-red-400 text-[10px] sm:text-xs bg-red-500/10 hover:bg-red-500/20 px-2 py-1 rounded transition">
                             Eliminar
                         </button>
                     </div>
