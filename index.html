@@ -4,47 +4,30 @@
     <meta name="google-site-verification" content="VxMAi_7LWVpkt-smApWlP1Wrk_jC-0v7TaHIJzvXEXg" />
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Dónde Te Veo | Cartelera y Guía de Streaming</title>
-    <meta name="description" content="Descubrí en qué plataforma de streaming (Netflix, Prime Video, Disney+, Max) podés ver tus películas y series favoritas en Argentina y Latinoamérica.">
-    <meta name="keywords" content="donde ver peliculas, cartelera streaming, donde te veo, netflix argentina, disney plus, prime video">
+    <title>Dónde Te Veo | Cartelera y Buscador de Streaming</title>
+    <meta name="description" content="Descubrí en qué plataforma de streaming está disponible tu película o serie favorita en Argentina, México, España y toda Latinoamérica.">
     
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🍿</text></svg>">
 
     <script src="https://gumroad.com/js/gumroad.js"></script>
-
-    <!-- Script Oficial de AdSense -->
     <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-8040246767660046" crossorigin="anonymous"></script>
 
     <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
     <style>
-        body { 
-            background-color: #0d0d0d; 
-            color: #e5e5e5; 
-            font-family: 'Poppins', sans-serif; 
-        }
-        .font-cinema { 
-            font-family: 'Bebas Neue', sans-serif; 
-            letter-spacing: 2px;
-        }
-        .cinema-card {
-            transition: transform 0.2s ease, box-shadow 0.2s ease;
-        }
-        .cinema-card:active, .cinema-card:hover {
-            transform: translateY(-4px);
-            box-shadow: 0 8px 20px -5px rgba(229, 9, 20, 0.4);
-        }
-        ins.adsbygoogle {
-            background: transparent !important;
-        }
+        body { background-color: #0d0d0d; color: #e5e5e5; font-family: 'Poppins', sans-serif; }
+        .font-cinema { font-family: 'Bebas Neue', sans-serif; letter-spacing: 2px; }
+        .cinema-card { transition: transform 0.2s ease, box-shadow 0.2s ease; }
+        .cinema-card:hover { transform: translateY(-4px); box-shadow: 0 8px 20px -5px rgba(229, 9, 20, 0.4); }
+        ins.adsbygoogle { background: transparent !important; }
     </style>
 </head>
 <body class="min-h-screen p-3 sm:p-6 md:p-8 border-t-4 border-red-600 flex flex-col justify-between">
 
     <div class="max-w-5xl mx-auto w-full">
-        <!-- Header Estilo Cine & Mobile Responsive Limpio -->
+        <!-- Header -->
         <header class="flex flex-col md:flex-row justify-between items-center gap-4 mb-6 sm:mb-10 border-b border-zinc-800 pb-4">
-            <div onclick="goHome()" class="flex items-center gap-2 cursor-pointer hover:opacity-80 transition" title="Volver al inicio">
+            <div onclick="goHome()" class="flex items-center gap-2 cursor-pointer hover:opacity-80 transition">
                 <span class="text-3xl">🍿</span>
                 <h1 class="text-3xl sm:text-4xl font-cinema tracking-wider text-white">
                     DÓNDE TE <span class="text-red-600">VEO?</span>
@@ -52,7 +35,6 @@
             </div>
             
             <div class="flex items-center gap-2 sm:gap-3 w-full md:w-auto justify-center md:justify-end flex-wrap sm:flex-nowrap">
-                <!-- Selector de País -->
                 <select id="countrySelect" onchange="changeCountry(this.value)" class="bg-zinc-900 border border-zinc-800 text-zinc-300 text-xs sm:text-sm rounded-lg p-2.5 focus:outline-none focus:border-red-600 cursor-pointer">
                     <option value="AR">🇦🇷 AR</option>
                     <option value="MX">🇲🇽 MX</option>
@@ -64,13 +46,11 @@
                     <option value="UY">🇺🇾 UY</option>
                 </select>
 
-                <!-- Botón Favoritos -->
-                <button onclick="openFavoritesModal()" class="bg-zinc-900 hover:bg-zinc-800 text-amber-400 font-semibold py-2.5 px-3 sm:px-4 rounded-lg border border-zinc-800 hover:border-amber-500/40 transition text-xs sm:text-sm flex items-center gap-1.5 shadow-sm">
+                <button onclick="openFavoritesModal()" class="bg-zinc-900 hover:bg-zinc-800 text-amber-400 font-semibold py-2.5 px-3 sm:px-4 rounded-lg border border-zinc-800 hover:border-amber-500/40 transition text-xs sm:text-sm flex items-center gap-1.5">
                     <span>⭐</span> <span>Favoritos</span>
                 </button>
                 
-                <!-- Botón Pase VIP -->
-                <a class="gumroad-button bg-red-600 hover:bg-red-700 text-white font-bold py-2.5 px-3 sm:px-4 rounded-lg shadow-lg shadow-red-600/20 transition text-xs sm:text-sm uppercase tracking-wider flex items-center gap-1.5 cursor-pointer whitespace-nowrap" 
+                <a class="gumroad-button bg-red-600 hover:bg-red-700 text-white font-bold py-2.5 px-3 sm:px-4 rounded-lg shadow-lg transition text-xs sm:text-sm uppercase tracking-wider flex items-center gap-1.5 cursor-pointer whitespace-nowrap" 
                    href="https://manusaldias.gumroad.com/l/ufquvf">
                     <span>🎟️</span> <span>Pase VIP</span>
                 </a>
@@ -88,8 +68,8 @@
                 </div>
             </div>
 
-            <!-- Banner Publicitario Real con AdSense -->
-            <div id="adBanner" class="bg-zinc-900/80 p-2 rounded-xl text-center text-zinc-400 mb-6 sm:mb-10 border border-zinc-800 shadow-md min-h-[90px] flex flex-col justify-center items-center overflow-hidden">
+            <!-- Banner Publicitario Real -->
+            <div id="adBanner" class="bg-zinc-900/80 p-2 rounded-xl text-center text-zinc-400 mb-8 border border-zinc-800 shadow-md min-h-[90px] flex flex-col justify-center items-center overflow-hidden">
                 <ins class="adsbygoogle"
                      style="display:block"
                      data-ad-client="ca-pub-8040246767660046"
@@ -101,78 +81,64 @@
             </div>
 
             <!-- Grid de Resultados -->
-            <div id="results" class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-3 sm:gap-6 mb-12">
-                <!-- Se cargan dinámicamente -->
-            </div>
+            <div id="results" class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-3 sm:gap-6 mb-12"></div>
 
-            <!-- Sección de Texto SEO para Aprobación de AdSense -->
-            <section class="bg-zinc-900/60 p-6 sm:p-8 rounded-2xl border border-zinc-800/80 mb-10 text-zinc-300">
-                <h2 class="text-2xl font-cinema text-white mb-3 tracking-wide">🍿 ¿Qué es Dónde Te Veo?</h2>
-                <p class="text-xs sm:text-sm leading-relaxed mb-4 text-zinc-400">
-                    <strong>Dónde Te Veo</strong> es tu buscador y guía definitiva para consultar en tiempo real en qué plataforma de streaming está disponible cualquier película o serie. Analizamos catálogos oficiales de servicios en Argentina, México, España y Latinoamérica para que no pierdas tiempo navegando entre diferentes aplicaciones.
-                </p>
-                <p class="text-xs sm:text-sm leading-relaxed mb-6 text-zinc-400">
-                    Consultamos diariamente las actualizaciones de plataformas como Netflix, Disney+, Prime Video, Max, Apple TV+, Paramount+ y Mercado Play para ofrecerte la cartelera más precisa según tu ubicación geográfica.
-                </p>
+            <!-- CONTENIDO DE TEXTO REQUERIDO POR ADSENSE (SEO) -->
+            <section class="bg-zinc-900/40 p-6 rounded-2xl border border-zinc-800/80 text-zinc-400 text-sm space-y-6 mb-12">
+                <div>
+                    <h3 class="text-xl font-cinema text-white mb-2">🍿 Guía de Streaming y Cartelera Digital</h3>
+                    <p class="leading-relaxed">
+                        <strong>Dónde Te Veo</strong> es una herramienta gratuita diseñada para ayudarte a encontrar rápidamente en qué plataforma de streaming está disponible cualquier película o serie. Analizamos los catálogos en tiempo real de servicios como Netflix, Prime Video, Disney+, HBO Max, Paramount+, Apple TV y Pluto TV.
+                    </p>
+                </div>
 
-                <h3 class="text-lg font-cinema text-amber-400 mb-3">Preguntas Frecuentes</h3>
-                <div class="space-y-4 text-xs sm:text-sm">
-                    <div class="bg-zinc-950/80 p-4 rounded-xl border border-zinc-800">
-                        <h4 class="font-bold text-zinc-200 mb-1">¿Cómo busco dónde ver una película?</h4>
-                        <p class="text-zinc-400">Escribí el título de la película o serie en nuestro buscador interactivo y seleccioná la portada correspondiente para ver en qué servicio está incluida por suscripción o alquiler.</p>
+                <div class="grid md:grid-cols-2 gap-6">
+                    <div>
+                        <h4 class="font-bold text-zinc-200 mb-1">🔍 ¿Cómo funciona el buscador?</h4>
+                        <p class="text-xs text-zinc-400 leading-normal">
+                            Escribí el título de tu película o serie favorita en la barra superior. Seleccioná tu país en el menú desplegable y te mostraremos al instante dónde podés verla por suscripción, alquiler o compra digital.
+                        </p>
                     </div>
-                    <div class="bg-zinc-950/80 p-4 rounded-xl border border-zinc-800">
-                        <h4 class="font-bold text-zinc-200 mb-1">¿Funciona en otros países fuera de Argentina?</h4>
-                        <p class="text-zinc-400">¡Sí! Nuestro sistema detecta automáticamente tu país por IP o podés cambiarlo manualmente desde el menú desplegable del encabezado (Argentina, México, España, Chile, Colombia, etc.).</p>
+                    <div>
+                        <h4 class="font-bold text-zinc-200 mb-1">🌐 Cobertura Internacional</h4>
+                        <p class="text-xs text-zinc-400 leading-normal">
+                            Soportamos las carteleras de Argentina, México, España, Estados Unidos, Chile, Colombia, Perú y Uruguay. Detectamos tu ubicación automáticamente para darte resultados exactos de tu región.
+                        </p>
                     </div>
                 </div>
             </section>
         </main>
     </div>
 
-    <!-- Footer con Páginas Legales Requeridas por AdSense -->
-    <footer class="max-w-5xl mx-auto w-full border-t border-zinc-800 pt-6 mt-8 text-center text-xs text-zinc-500">
-        <div class="flex justify-center gap-4 sm:gap-6 mb-3 flex-wrap">
-            <button onclick="openLegalModal('privacidad')" class="hover:text-zinc-300 transition">Política de Privacidad</button>
-            <span>•</span>
-            <button onclick="openLegalModal('terminos')" class="hover:text-zinc-300 transition">Términos de Servicio</button>
-            <span>•</span>
-            <button onclick="openLegalModal('contacto')" class="hover:text-zinc-300 transition">Contacto</button>
-        </div>
-        <p>© 2026 Dónde Te Veo — Todos los derechos reservados. Datos provistos por TMDB.</p>
-    </footer>
-
-    <!-- Modales de la App -->
+    <!-- Modales -->
     <div id="modal" class="fixed inset-0 bg-black/90 hidden items-center justify-center p-4 z-50 backdrop-blur-sm">
         <div class="bg-zinc-900 p-5 sm:p-8 rounded-2xl max-w-md w-full relative border border-zinc-800 shadow-2xl">
-            <button onclick="closeModal()" class="absolute top-3 right-3 sm:top-4 sm:right-4 text-zinc-400 hover:text-white text-2xl p-1">✕</button>
+            <button onclick="closeModal()" class="absolute top-3 right-3 text-zinc-400 hover:text-white text-2xl p-1">✕</button>
             <span class="bg-red-600/20 text-red-500 text-[10px] sm:text-xs font-bold px-3 py-1 rounded-full uppercase tracking-wider mb-2 inline-block">Disponibilidad</span>
             <h2 id="modalTitle" class="text-2xl sm:text-3xl font-cinema text-white mb-1 leading-tight">Título</h2>
             <p id="modalRegionText" class="text-zinc-400 text-xs sm:text-sm mb-4">Plataformas disponibles:</p>
             <div id="providers" class="flex flex-wrap gap-3 justify-center py-4 bg-zinc-950/50 rounded-xl border border-zinc-800/50 mb-5 min-h-[100px] items-center"></div>
-            <button onclick="saveFavorite()" class="w-full bg-zinc-800 hover:bg-zinc-700 text-amber-400 font-semibold py-3 px-4 rounded-xl transition border border-amber-500/30 flex justify-center items-center gap-2 text-sm sm:text-base">
-                ⭐ Guardar en mi Lista Favorita
-            </button>
+            <button onclick="saveFavorite()" class="w-full bg-zinc-800 hover:bg-zinc-700 text-amber-400 font-semibold py-3 px-4 rounded-xl transition border border-amber-500/30 flex justify-center items-center gap-2 text-sm">⭐ Guardar en mi Lista Favorita</button>
         </div>
     </div>
 
-    <!-- Modal Favoritos -->
     <div id="favsModal" class="fixed inset-0 bg-black/90 hidden items-center justify-center p-4 z-50 backdrop-blur-sm">
         <div class="bg-zinc-900 p-5 sm:p-8 rounded-2xl max-w-lg w-full relative border border-zinc-800 shadow-2xl max-h-[80vh] flex flex-col">
-            <button onclick="closeFavsModal()" class="absolute top-3 right-3 sm:top-4 sm:right-4 text-zinc-400 hover:text-white text-2xl p-1">✕</button>
+            <button onclick="closeFavsModal()" class="absolute top-3 right-3 text-zinc-400 hover:text-white text-2xl p-1">✕</button>
             <h2 class="text-2xl sm:text-3xl font-cinema text-amber-400 mb-4 flex items-center gap-2">⭐ Mi Lista Favorita</h2>
             <div id="favsList" class="overflow-y-auto flex-1 space-y-2.5 pr-1"></div>
         </div>
     </div>
 
-    <!-- Modal de Páginas Legales Requerido por AdSense -->
-    <div id="legalModal" class="fixed inset-0 bg-black/90 hidden items-center justify-center p-4 z-50 backdrop-blur-sm">
-        <div class="bg-zinc-900 p-6 sm:p-8 rounded-2xl max-w-xl w-full relative border border-zinc-800 shadow-2xl max-h-[80vh] flex flex-col">
-            <button onclick="closeLegalModal()" class="absolute top-3 right-3 sm:top-4 sm:right-4 text-zinc-400 hover:text-white text-2xl p-1">✕</button>
-            <h2 id="legalModalTitle" class="text-2xl font-cinema text-white mb-4">Información Legal</h2>
-            <div id="legalModalContent" class="overflow-y-auto flex-1 text-xs sm:text-sm text-zinc-400 space-y-3 pr-2 leading-relaxed"></div>
+    <!-- FOOTER OBLIGATORIO PARA AD SENSE -->
+    <footer class="border-t border-zinc-800 mt-12 py-6 text-center text-xs text-zinc-500 max-w-5xl mx-auto w-full">
+        <p class="mb-2">© 2026 Dónde Te Veo — Todos los derechos reservados. Datos provistos por TMDB API.</p>
+        <div class="flex justify-center gap-4">
+            <a href="#" onclick="alert('Política de Privacidad: Dónde Te Veo utiliza cookies de sesión y servicios de terceros como Google AdSense y TMDB para ofrecer contenido relevante y analizar el tráfico de forma anónima.'); return false;" class="hover:text-zinc-300 underline">Política de Privacidad</a>
+            <span>•</span>
+            <a href="#" onclick="alert('Términos de Uso: Dónde Te Veo es una herramienta informativa. No alojamos ni transmitimos contenido audiovisual directamente.'); return false;" class="hover:text-zinc-300 underline">Términos de Uso</a>
         </div>
-    </div>
+    </footer>
 
     <script>
         const API_KEY = '1da7abd40ce7f268d31e9e626fa6cc6b';
@@ -190,22 +156,14 @@
                 if (data && data.country_code) {
                     userCountry = data.country_code;
                     const select = document.getElementById('countrySelect');
-                    if ([...select.options].some(o => o.value === userCountry)) {
-                        select.value = userCountry;
-                    }
+                    if ([...select.options].some(o => o.value === userCountry)) select.value = userCountry;
                 }
-            } catch (error) {
-                console.log("Usando país por defecto (AR).");
-            }
+            } catch (error) { console.log("Usando país AR por defecto."); }
         }
         detectUserCountry();
 
         function changeCountry(code) { userCountry = code; }
-
-        function goHome() {
-            document.getElementById('searchInput').value = '';
-            document.getElementById('results').innerHTML = '';
-        }
+        function goHome() { document.getElementById('searchInput').value = ''; document.getElementById('results').innerHTML = ''; }
 
         document.getElementById('searchInput').addEventListener('input', async (e) => {
             const val = e.target.value.trim();
@@ -214,9 +172,7 @@
                 const res = await fetch(`https://api.themoviedb.org/3/search/multi?api_key=${API_KEY}&language=es-AR&query=${val}`);
                 const data = await res.json();
                 renderResults(data.results);
-            } catch (error) {
-                console.log("Error buscando:", error);
-            }
+            } catch (error) { console.log("Error buscando:", error); }
         });
 
         function renderResults(items) {
@@ -225,15 +181,13 @@
             items.filter(item => item.poster_path).forEach(item => {
                 const type = item.media_type === 'tv' ? 'tv' : 'movie';
                 container.innerHTML += `
-                    <div class="cinema-card bg-zinc-900 rounded-xl overflow-hidden cursor-pointer border border-zinc-800/80" 
-                         onclick="openModal(${item.id}, '${type}', '${item.title || item.name}')">
+                    <div class="cinema-card bg-zinc-900 rounded-xl overflow-hidden cursor-pointer border border-zinc-800/80" onclick="openModal(${item.id}, '${type}', '${item.title || item.name}')">
                         <img src="https://image.tmdb.org/t/p/w500${item.poster_path}" alt="Poster" class="w-full h-56 sm:h-72 object-cover">
                         <div class="p-2 sm:p-3 bg-zinc-900">
                             <h3 class="font-bold text-xs sm:text-sm text-zinc-200 truncate">${item.title || item.name}</h3>
                             <p class="text-[10px] sm:text-xs text-red-500 mt-0.5 font-medium">${type === 'tv' ? '📺 Serie' : '🎬 Película'}</p>
                         </div>
-                    </div>
-                `;
+                    </div>`;
             });
         }
 
@@ -242,106 +196,59 @@
             document.getElementById('modalTitle').innerText = title;
             document.getElementById('modalRegionText').innerText = `Plataformas disponibles (${userCountry}):`;
             document.getElementById('modal').classList.replace('hidden', 'flex');
-            
             const provContainer = document.getElementById('providers');
-            provContainer.innerHTML = '<span class="text-zinc-500 text-xs sm:text-sm">Consultando cartelera...</span>';
-
+            provContainer.innerHTML = '<span class="text-zinc-500 text-xs">Consultando cartelera...</span>';
             try {
                 const res = await fetch(`https://api.themoviedb.org/3/${type}/${id}/watch/providers?api_key=${API_KEY}`);
                 const data = await res.json();
                 const regionData = data.results?.[userCountry];
                 const platforms = regionData?.flatrate || regionData?.rent || []; 
-                
                 if (platforms.length > 0) {
                     provContainer.innerHTML = platforms.map(p => `
                         <div class="text-center p-1.5">
                             <img src="https://image.tmdb.org/t/p/w200${p.logo_path}" class="w-10 h-10 sm:w-12 sm:h-12 rounded-xl mb-1 shadow-md mx-auto border border-zinc-700">
-                            <span class="text-[9px] sm:text-[10px] text-zinc-400 block truncate max-w-[55px] sm:max-w-[60px]">${p.provider_name}</span>
-                        </div>
-                    `).join('');
+                            <span class="text-[9px] sm:text-[10px] text-zinc-400 block truncate max-w-[55px]">${p.provider_name}</span>
+                        </div>`).join('');
                 } else {
-                    provContainer.innerHTML = `<p class="text-zinc-500 text-xs sm:text-sm p-4 text-center">No está disponible en streaming por suscripción en esta región (${userCountry}).</p>`;
+                    provContainer.innerHTML = `<p class="text-zinc-500 text-xs p-4 text-center">No está disponible en streaming en (${userCountry}).</p>`;
                 }
-            } catch (error) {
-                provContainer.innerHTML = '<p class="text-red-400 text-xs sm:text-sm">Error al cargar plataformas.</p>';
-            }
+            } catch (error) { provContainer.innerHTML = '<p class="text-red-400 text-xs">Error al cargar plataformas.</p>'; }
         }
 
         function closeModal() { document.getElementById('modal').classList.replace('flex', 'hidden'); }
-
         function saveFavorite() {
             if (!isPro && favorites.length >= 5) {
-                alert("🎟️ ¡Llegaste al límite de 5 favoritos gratis!\n\nTe redirigimos para activar tu Pase VIP...");
+                alert("🎟️ ¡Llegaste al límite de 5 favoritos gratis!\n\nTe estamos redirigiendo para activar tu pase VIP...");
                 window.location.href = GUMROAD_URL;
                 return;
             }
             if (!favorites.some(f => f.id === currentMovie.id)) {
                 favorites.push(currentMovie);
                 localStorage.setItem('streamFavs', JSON.stringify(favorites));
-                alert(`🍿 "${currentMovie.title}" guardada en tus listas (${favorites.length}/5).`);
-            } else {
-                alert("Esta peli/serie ya está en tu lista.");
-            }
+                alert(`🍿 "${currentMovie.title}" guardada en tus listas.`);
+            } else { alert("Esta peli/serie ya está en tu lista."); }
         }
 
         function openFavoritesModal() {
             const container = document.getElementById('favsList');
             if (favorites.length === 0) {
-                container.innerHTML = '<p class="text-zinc-500 text-center py-8 text-xs sm:text-sm">Todavía no guardaste ningún título en tu lista.</p>';
+                container.innerHTML = '<p class="text-zinc-500 text-center py-8 text-xs">Todavía no guardaste ningún título.</p>';
             } else {
                 container.innerHTML = favorites.map((fav, index) => `
                     <div class="flex justify-between items-center bg-zinc-950 p-2.5 sm:p-3 rounded-xl border border-zinc-800">
                         <span class="font-semibold text-zinc-200 text-xs sm:text-sm truncate max-w-[70%]">${fav.title}</span>
-                        <button onclick="removeFavorite(${index})" class="text-red-500 hover:text-red-400 text-[10px] sm:text-xs bg-red-500/10 hover:bg-red-500/20 px-2 py-1 rounded transition">Eliminar</button>
-                    </div>
-                `).join('');
+                        <button onclick="removeFavorite(${index})" class="text-red-500 hover:text-red-400 text-[10px] sm:text-xs bg-red-500/10 px-2 py-1 rounded">Eliminar</button>
+                    </div>`).join('');
             }
             document.getElementById('favsModal').classList.replace('hidden', 'flex');
         }
 
         function closeFavsModal() { document.getElementById('favsModal').classList.replace('flex', 'hidden'); }
-
         function removeFavorite(index) {
             favorites.splice(index, 1);
             localStorage.setItem('streamFavs', JSON.stringify(favorites));
             openFavoritesModal();
         }
-
-        // Lógica de Modales Legales Requeridos por AdSense
-        function openLegalModal(type) {
-            const title = document.getElementById('legalModalTitle');
-            const content = document.getElementById('legalModalContent');
-            
-            if (type === 'privacidad') {
-                title.innerText = "Política de Privacidad";
-                content.innerHTML = `
-                    <p>En <strong>Dónde Te Veo</strong> nos tomamos muy en serio la privacidad de nuestros usuarios.</p>
-                    <p><strong>Uso de Cookies y Publicidad:</strong> Este sitio utiliza proveedores de terceros, incluido Google AdSense, que emplean cookies para mostrar anuncios basados en las visitas previas de un usuario a este sitio web o a otros sitios web.</p>
-                    <p>El uso de cookies de publicidad de Google permite a Google y a sus socios mostrar anuncios basados en las visitas realizadas a nuestros sitios o a otros sitios de Internet.</p>
-                    <p>Los usuarios pueden inhabilitar la publicidad personalizada consultando la Configuración de anuncios de Google o las preferencias de cookies de su navegador.</p>
-                    <p><strong>Datos Personales:</strong> No recopilamos ni almacenamos datos personales ni contraseñas. Los favoritos guardados se almacenan exclusivamente de manera local en el navegador del usuario (localStorage).</p>
-                `;
-            } else if (type === 'terminos') {
-                title.innerText = "Términos de Servicio";
-                content.innerHTML = `
-                    <p>Al acceder a <strong>Dónde Te Veo</strong>, aceptás cumplir con estos términos de servicio y todas las leyes aplicables.</p>
-                    <p><strong>Uso del Servicio:</strong> Dónde Te Veo es una herramienta informativa que recopila datos de disponibilidad de plataformas de streaming a través de la API pública de TMDB.</p>
-                    <p>No almacenamos, transmitimos ni reproducimos material audiovisual con derechos de autor. Todos los logotipos, nombres de películas e imágenes pertenecen a sus respectivos propietarios legales.</p>
-                `;
-            } else if (type === 'contacto') {
-                title.innerText = "Contacto";
-                content.innerHTML = `
-                    <p>¿Tenés sugerencias, consultas sobre el sitio o reporte de errores?</p>
-                    <p>Podés ponerte en contacto directamente con el desarrollador del proyecto escribiendo un correo a:</p>
-                    <p class="font-bold text-red-500 text-sm py-2">soporte.dondeteveo@gmail.com</p>
-                    <p>Responderemos tu mensaje a la brevedad.</p>
-                `;
-            }
-            
-            document.getElementById('legalModal').classList.replace('hidden', 'flex');
-        }
-
-        function closeLegalModal() { document.getElementById('legalModal').classList.replace('flex', 'hidden'); }
     </script>
 </body>
 </html>
