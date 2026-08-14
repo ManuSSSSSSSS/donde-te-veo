@@ -4,12 +4,16 @@
     <meta name="google-site-verification" content="VxMAi_7LWVpkt-smApWlP1Wrk_jC-0v7TaHIJzvXEXg" />
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Dónde Te Veo | Cartelera de Streaming</title>
+    <title>Dónde Te Veo | Cartelera y Guía de Streaming</title>
+    <meta name="description" content="Descubrí en qué plataforma de streaming (Netflix, Prime Video, Disney+, Max) podés ver tus películas y series favoritas en Argentina y Latinoamérica.">
+    <meta name="keywords" content="donde ver peliculas, cartelera streaming, donde te veo, netflix argentina, disney plus, prime video">
+    
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🍿</text></svg>">
 
     <script src="https://gumroad.com/js/gumroad.js"></script>
 
+    <!-- Script Oficial de AdSense -->
     <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-8040246767660046" crossorigin="anonymous"></script>
 
     <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
@@ -30,7 +34,6 @@
             transform: translateY(-4px);
             box-shadow: 0 8px 20px -5px rgba(229, 9, 20, 0.4);
         }
-        /* Oculta recuadros blancos mientras AdSense aprueba el anuncio */
         ins.adsbygoogle {
             background: transparent !important;
         }
@@ -41,7 +44,6 @@
     <div class="max-w-5xl mx-auto w-full">
         <!-- Header Estilo Cine & Mobile Responsive Limpio -->
         <header class="flex flex-col md:flex-row justify-between items-center gap-4 mb-6 sm:mb-10 border-b border-zinc-800 pb-4">
-            <!-- Clic para volver a la pantalla principal -->
             <div onclick="goHome()" class="flex items-center gap-2 cursor-pointer hover:opacity-80 transition" title="Volver al inicio">
                 <span class="text-3xl">🍿</span>
                 <h1 class="text-3xl sm:text-4xl font-cinema tracking-wider text-white">
@@ -62,12 +64,12 @@
                     <option value="UY">🇺🇾 UY</option>
                 </select>
 
-                <!-- Botón para ver Mis Favoritos -->
+                <!-- Botón Favoritos -->
                 <button onclick="openFavoritesModal()" class="bg-zinc-900 hover:bg-zinc-800 text-amber-400 font-semibold py-2.5 px-3 sm:px-4 rounded-lg border border-zinc-800 hover:border-amber-500/40 transition text-xs sm:text-sm flex items-center gap-1.5 shadow-sm">
                     <span>⭐</span> <span>Favoritos</span>
                 </button>
                 
-                <!-- Botón Pase VIP Estilizado -->
+                <!-- Botón Pase VIP -->
                 <a class="gumroad-button bg-red-600 hover:bg-red-700 text-white font-bold py-2.5 px-3 sm:px-4 rounded-lg shadow-lg shadow-red-600/20 transition text-xs sm:text-sm uppercase tracking-wider flex items-center gap-1.5 cursor-pointer whitespace-nowrap" 
                    href="https://manusaldias.gumroad.com/l/ufquvf">
                     <span>🎟️</span> <span>Pase VIP</span>
@@ -98,42 +100,77 @@
                 </script>
             </div>
 
-            <!-- Grid de Resultados Adaptado a Celular -->
-            <div id="results" class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-3 sm:gap-6">
-                <!-- Las películas se cargan dinámicamente -->
+            <!-- Grid de Resultados -->
+            <div id="results" class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-3 sm:gap-6 mb-12">
+                <!-- Se cargan dinámicamente -->
             </div>
+
+            <!-- Sección de Texto SEO para Aprobación de AdSense -->
+            <section class="bg-zinc-900/60 p-6 sm:p-8 rounded-2xl border border-zinc-800/80 mb-10 text-zinc-300">
+                <h2 class="text-2xl font-cinema text-white mb-3 tracking-wide">🍿 ¿Qué es Dónde Te Veo?</h2>
+                <p class="text-xs sm:text-sm leading-relaxed mb-4 text-zinc-400">
+                    <strong>Dónde Te Veo</strong> es tu buscador y guía definitiva para consultar en tiempo real en qué plataforma de streaming está disponible cualquier película o serie. Analizamos catálogos oficiales de servicios en Argentina, México, España y Latinoamérica para que no pierdas tiempo navegando entre diferentes aplicaciones.
+                </p>
+                <p class="text-xs sm:text-sm leading-relaxed mb-6 text-zinc-400">
+                    Consultamos diariamente las actualizaciones de plataformas como Netflix, Disney+, Prime Video, Max, Apple TV+, Paramount+ y Mercado Play para ofrecerte la cartelera más precisa según tu ubicación geográfica.
+                </p>
+
+                <h3 class="text-lg font-cinema text-amber-400 mb-3">Preguntas Frecuentes</h3>
+                <div class="space-y-4 text-xs sm:text-sm">
+                    <div class="bg-zinc-950/80 p-4 rounded-xl border border-zinc-800">
+                        <h4 class="font-bold text-zinc-200 mb-1">¿Cómo busco dónde ver una película?</h4>
+                        <p class="text-zinc-400">Escribí el título de la película o serie en nuestro buscador interactivo y seleccioná la portada correspondiente para ver en qué servicio está incluida por suscripción o alquiler.</p>
+                    </div>
+                    <div class="bg-zinc-950/80 p-4 rounded-xl border border-zinc-800">
+                        <h4 class="font-bold text-zinc-200 mb-1">¿Funciona en otros países fuera de Argentina?</h4>
+                        <p class="text-zinc-400">¡Sí! Nuestro sistema detecta automáticamente tu país por IP o podés cambiarlo manualmente desde el menú desplegable del encabezado (Argentina, México, España, Chile, Colombia, etc.).</p>
+                    </div>
+                </div>
+            </section>
         </main>
     </div>
 
-    <!-- Modal Dónde Ver -->
+    <!-- Footer con Páginas Legales Requeridas por AdSense -->
+    <footer class="max-w-5xl mx-auto w-full border-t border-zinc-800 pt-6 mt-8 text-center text-xs text-zinc-500">
+        <div class="flex justify-center gap-4 sm:gap-6 mb-3 flex-wrap">
+            <button onclick="openLegalModal('privacidad')" class="hover:text-zinc-300 transition">Política de Privacidad</button>
+            <span>•</span>
+            <button onclick="openLegalModal('terminos')" class="hover:text-zinc-300 transition">Términos de Servicio</button>
+            <span>•</span>
+            <button onclick="openLegalModal('contacto')" class="hover:text-zinc-300 transition">Contacto</button>
+        </div>
+        <p>© 2026 Dónde Te Veo — Todos los derechos reservados. Datos provistos por TMDB.</p>
+    </footer>
+
+    <!-- Modales de la App -->
     <div id="modal" class="fixed inset-0 bg-black/90 hidden items-center justify-center p-4 z-50 backdrop-blur-sm">
         <div class="bg-zinc-900 p-5 sm:p-8 rounded-2xl max-w-md w-full relative border border-zinc-800 shadow-2xl">
             <button onclick="closeModal()" class="absolute top-3 right-3 sm:top-4 sm:right-4 text-zinc-400 hover:text-white text-2xl p-1">✕</button>
-            
             <span class="bg-red-600/20 text-red-500 text-[10px] sm:text-xs font-bold px-3 py-1 rounded-full uppercase tracking-wider mb-2 inline-block">Disponibilidad</span>
-            <h2 id="modalTitle" class="text-2xl sm:text-3xl font-cinema text-white mb-1 leading-tight">Título de la Película</h2>
-            <p id="modalRegionText" class="text-zinc-400 text-xs sm:text-sm mb-4">Plataformas de streaming disponibles:</p>
-            
-            <div id="providers" class="flex flex-wrap gap-3 justify-center py-4 bg-zinc-950/50 rounded-xl border border-zinc-800/50 mb-5 min-h-[100px] items-center">
-                <!-- Logos de las plataformas -->
-            </div>
-            
+            <h2 id="modalTitle" class="text-2xl sm:text-3xl font-cinema text-white mb-1 leading-tight">Título</h2>
+            <p id="modalRegionText" class="text-zinc-400 text-xs sm:text-sm mb-4">Plataformas disponibles:</p>
+            <div id="providers" class="flex flex-wrap gap-3 justify-center py-4 bg-zinc-950/50 rounded-xl border border-zinc-800/50 mb-5 min-h-[100px] items-center"></div>
             <button onclick="saveFavorite()" class="w-full bg-zinc-800 hover:bg-zinc-700 text-amber-400 font-semibold py-3 px-4 rounded-xl transition border border-amber-500/30 flex justify-center items-center gap-2 text-sm sm:text-base">
                 ⭐ Guardar en mi Lista Favorita
             </button>
         </div>
     </div>
 
-    <!-- Modal Lista de Favoritos -->
+    <!-- Modal Favoritos -->
     <div id="favsModal" class="fixed inset-0 bg-black/90 hidden items-center justify-center p-4 z-50 backdrop-blur-sm">
         <div class="bg-zinc-900 p-5 sm:p-8 rounded-2xl max-w-lg w-full relative border border-zinc-800 shadow-2xl max-h-[80vh] flex flex-col">
             <button onclick="closeFavsModal()" class="absolute top-3 right-3 sm:top-4 sm:right-4 text-zinc-400 hover:text-white text-2xl p-1">✕</button>
-            
             <h2 class="text-2xl sm:text-3xl font-cinema text-amber-400 mb-4 flex items-center gap-2">⭐ Mi Lista Favorita</h2>
-            
-            <div id="favsList" class="overflow-y-auto flex-1 space-y-2.5 pr-1">
-                <!-- Se cargan dinámicamente los favoritos -->
-            </div>
+            <div id="favsList" class="overflow-y-auto flex-1 space-y-2.5 pr-1"></div>
+        </div>
+    </div>
+
+    <!-- Modal de Páginas Legales Requerido por AdSense -->
+    <div id="legalModal" class="fixed inset-0 bg-black/90 hidden items-center justify-center p-4 z-50 backdrop-blur-sm">
+        <div class="bg-zinc-900 p-6 sm:p-8 rounded-2xl max-w-xl w-full relative border border-zinc-800 shadow-2xl max-h-[80vh] flex flex-col">
+            <button onclick="closeLegalModal()" class="absolute top-3 right-3 sm:top-4 sm:right-4 text-zinc-400 hover:text-white text-2xl p-1">✕</button>
+            <h2 id="legalModalTitle" class="text-2xl font-cinema text-white mb-4">Información Legal</h2>
+            <div id="legalModalContent" class="overflow-y-auto flex-1 text-xs sm:text-sm text-zinc-400 space-y-3 pr-2 leading-relaxed"></div>
         </div>
     </div>
 
@@ -143,10 +180,9 @@
 
         let currentMovie = null;
         let isPro = false; 
-        let userCountry = 'AR'; // Por defecto
+        let userCountry = 'AR'; 
         let favorites = JSON.parse(localStorage.getItem('streamFavs')) || [];
 
-        // Detectar País por IP al iniciar
         async function detectUserCountry() {
             try {
                 const res = await fetch('https://ipapi.co/json/');
@@ -159,16 +195,13 @@
                     }
                 }
             } catch (error) {
-                console.log("No se pudo detectar la IP, usando país por defecto (AR).");
+                console.log("Usando país por defecto (AR).");
             }
         }
         detectUserCountry();
 
-        function changeCountry(code) {
-            userCountry = code;
-        }
+        function changeCountry(code) { userCountry = code; }
 
-        // Función para volver al inicio
         function goHome() {
             document.getElementById('searchInput').value = '';
             document.getElementById('results').innerHTML = '';
@@ -177,7 +210,6 @@
         document.getElementById('searchInput').addEventListener('input', async (e) => {
             const val = e.target.value.trim();
             if (val.length < 3) return;
-            
             try {
                 const res = await fetch(`https://api.themoviedb.org/3/search/multi?api_key=${API_KEY}&language=es-AR&query=${val}`);
                 const data = await res.json();
@@ -190,7 +222,6 @@
         function renderResults(items) {
             const container = document.getElementById('results');
             container.innerHTML = '';
-            
             items.filter(item => item.poster_path).forEach(item => {
                 const type = item.media_type === 'tv' ? 'tv' : 'movie';
                 container.innerHTML += `
@@ -218,8 +249,6 @@
             try {
                 const res = await fetch(`https://api.themoviedb.org/3/${type}/${id}/watch/providers?api_key=${API_KEY}`);
                 const data = await res.json();
-                
-                // Obtiene las plataformas según el país seleccionado/detectado
                 const regionData = data.results?.[userCountry];
                 const platforms = regionData?.flatrate || regionData?.rent || []; 
                 
@@ -238,25 +267,14 @@
             }
         }
 
-        function closeModal() {
-            document.getElementById('modal').classList.replace('flex', 'hidden');
-        }
+        function closeModal() { document.getElementById('modal').classList.replace('flex', 'hidden'); }
 
         function saveFavorite() {
             if (!isPro && favorites.length >= 5) {
-                alert(
-                    "🎟️ ¡Llegaste al límite de 5 favoritos gratis!\n\n" +
-                    "¿Por qué existe este límite?\n" +
-                    "Mantener 'Dónde Te Veo' funcionando sin interrupciones, actualizando las plataformas de streaming en tiempo real y libre de anuncios molestos requiere recursos de servidores.\n\n" +
-                    "Con tu Pase VIP ($5 USD pago único) hacés posible que el proyecto siga vivo y desbloqueás:\n" +
-                    "• Guardado ilimitado de películas y series.\n" +
-                    "• Experiencia 100% limpia sin banners publicitarios.\n\n" +
-                    "Te estamos redirigiendo para activar tu pase VIP..."
-                );
+                alert("🎟️ ¡Llegaste al límite de 5 favoritos gratis!\n\nTe redirigimos para activar tu Pase VIP...");
                 window.location.href = GUMROAD_URL;
                 return;
             }
-            
             if (!favorites.some(f => f.id === currentMovie.id)) {
                 favorites.push(currentMovie);
                 localStorage.setItem('streamFavs', JSON.stringify(favorites));
@@ -266,7 +284,6 @@
             }
         }
 
-        // Lógica para abrir y ver la lista de favoritos
         function openFavoritesModal() {
             const container = document.getElementById('favsList');
             if (favorites.length === 0) {
@@ -275,24 +292,56 @@
                 container.innerHTML = favorites.map((fav, index) => `
                     <div class="flex justify-between items-center bg-zinc-950 p-2.5 sm:p-3 rounded-xl border border-zinc-800">
                         <span class="font-semibold text-zinc-200 text-xs sm:text-sm truncate max-w-[70%]">${fav.title}</span>
-                        <button onclick="removeFavorite(${index})" class="text-red-500 hover:text-red-400 text-[10px] sm:text-xs bg-red-500/10 hover:bg-red-500/20 px-2 py-1 rounded transition">
-                            Eliminar
-                        </button>
+                        <button onclick="removeFavorite(${index})" class="text-red-500 hover:text-red-400 text-[10px] sm:text-xs bg-red-500/10 hover:bg-red-500/20 px-2 py-1 rounded transition">Eliminar</button>
                     </div>
                 `).join('');
             }
             document.getElementById('favsModal').classList.replace('hidden', 'flex');
         }
 
-        function closeFavsModal() {
-            document.getElementById('favsModal').classList.replace('flex', 'hidden');
-        }
+        function closeFavsModal() { document.getElementById('favsModal').classList.replace('flex', 'hidden'); }
 
         function removeFavorite(index) {
             favorites.splice(index, 1);
             localStorage.setItem('streamFavs', JSON.stringify(favorites));
             openFavoritesModal();
         }
+
+        // Lógica de Modales Legales Requeridos por AdSense
+        function openLegalModal(type) {
+            const title = document.getElementById('legalModalTitle');
+            const content = document.getElementById('legalModalContent');
+            
+            if (type === 'privacidad') {
+                title.innerText = "Política de Privacidad";
+                content.innerHTML = `
+                    <p>En <strong>Dónde Te Veo</strong> nos tomamos muy en serio la privacidad de nuestros usuarios.</p>
+                    <p><strong>Uso de Cookies y Publicidad:</strong> Este sitio utiliza proveedores de terceros, incluido Google AdSense, que emplean cookies para mostrar anuncios basados en las visitas previas de un usuario a este sitio web o a otros sitios web.</p>
+                    <p>El uso de cookies de publicidad de Google permite a Google y a sus socios mostrar anuncios basados en las visitas realizadas a nuestros sitios o a otros sitios de Internet.</p>
+                    <p>Los usuarios pueden inhabilitar la publicidad personalizada consultando la Configuración de anuncios de Google o las preferencias de cookies de su navegador.</p>
+                    <p><strong>Datos Personales:</strong> No recopilamos ni almacenamos datos personales ni contraseñas. Los favoritos guardados se almacenan exclusivamente de manera local en el navegador del usuario (localStorage).</p>
+                `;
+            } else if (type === 'terminos') {
+                title.innerText = "Términos de Servicio";
+                content.innerHTML = `
+                    <p>Al acceder a <strong>Dónde Te Veo</strong>, aceptás cumplir con estos términos de servicio y todas las leyes aplicables.</p>
+                    <p><strong>Uso del Servicio:</strong> Dónde Te Veo es una herramienta informativa que recopila datos de disponibilidad de plataformas de streaming a través de la API pública de TMDB.</p>
+                    <p>No almacenamos, transmitimos ni reproducimos material audiovisual con derechos de autor. Todos los logotipos, nombres de películas e imágenes pertenecen a sus respectivos propietarios legales.</p>
+                `;
+            } else if (type === 'contacto') {
+                title.innerText = "Contacto";
+                content.innerHTML = `
+                    <p>¿Tenés sugerencias, consultas sobre el sitio o reporte de errores?</p>
+                    <p>Podés ponerte en contacto directamente con el desarrollador del proyecto escribiendo un correo a:</p>
+                    <p class="font-bold text-red-500 text-sm py-2">soporte.dondeteveo@gmail.com</p>
+                    <p>Responderemos tu mensaje a la brevedad.</p>
+                `;
+            }
+            
+            document.getElementById('legalModal').classList.replace('hidden', 'flex');
+        }
+
+        function closeLegalModal() { document.getElementById('legalModal').classList.replace('flex', 'hidden'); }
     </script>
 </body>
 </html>
