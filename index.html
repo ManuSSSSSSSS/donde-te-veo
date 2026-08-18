@@ -52,10 +52,10 @@
                     <span>⭐</span> <span>Favoritos</span>
                 </button>
                 
-                <!-- Botón A La Gorra / Apoyo Libre -->
-                <a class="gumroad-button bg-amber-500 hover:bg-amber-600 text-slate-950 font-bold py-2.5 px-3 sm:px-4 rounded-lg shadow-lg shadow-amber-500/20 transition text-xs sm:text-sm uppercase tracking-wider flex items-center gap-1.5 cursor-pointer whitespace-nowrap" 
+                <!-- Botón Apoyar el proyecto -->
+                <a class="gumroad-button bg-red-600 hover:bg-red-700 text-white font-bold py-2.5 px-3 sm:px-4 rounded-lg shadow-lg transition text-xs sm:text-sm uppercase tracking-wider flex items-center gap-1.5 cursor-pointer whitespace-nowrap" 
                    href="https://manusaldias.gumroad.com/l/ufquvf">
-                    <span>☕</span> <span>Apoya el proyecto</span>
+                    <span>🙌</span> <span>Apoyar el proyecto</span>
                 </a>
             </div>
         </header>
@@ -91,15 +91,15 @@
 
             <!-- Grid de Resultados / Populares -->
             <div id="results" class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-3 sm:gap-6 mb-12">
-                <!-- Se cargan dinámicamente con JS -->
+                <!-- Se cargan dinámicamente -->
             </div>
 
-            <!-- CONTENIDO DE TEXTO REQUERIDO POR ADSENSE (SEO / Valor de Publicador) -->
+            <!-- CONTENIDO DE TEXTO REQUERIDO POR ADSENSE (SEO) -->
             <section class="bg-zinc-900/40 p-6 rounded-2xl border border-zinc-800/80 text-zinc-400 text-sm space-y-6 mb-12">
                 <div>
                     <h3 class="text-xl font-cinema text-white mb-2">🍿 Cartelera y Disponibilidad en Streaming</h3>
                     <p class="leading-relaxed">
-                        <strong>Dónde Te Veo</strong> es un buscador gratuito e interactivo que te ayuda a saber al instante en qué servicio de streaming oficial (Netflix, Prime Video, Disney+, HBO Max, Apple TV, Pluto TV, entre otros) podés ver cualquier película o serie sin perder tiempo buscando en cada aplicación por separado.
+                        <strong>Dónde Te Veo</strong> es un buscador gratuito e interactivo que te ayuda a saber al instante en qué servicio de streaming oficial (Netflix, Prime Video, Disney+, Max, Apple TV, Pluto TV, entre otros) podés ver cualquier película o serie sin perder tiempo buscando en cada aplicación por separado.
                     </p>
                 </div>
 
@@ -128,11 +128,16 @@
             
             <span class="bg-red-600/20 text-red-500 text-[10px] sm:text-xs font-bold px-3 py-1 rounded-full uppercase tracking-wider mb-2 inline-block">Disponibilidad Oficial</span>
             <h2 id="modalTitle" class="text-2xl sm:text-3xl font-cinema text-white mb-1 leading-tight">Título</h2>
-            <p id="modalRegionText" class="text-zinc-400 text-xs mb-3">Plataformas disponibles (tocá para ir a verla):</p>
+            <p id="modalRegionText" class="text-zinc-400 text-xs mb-3">Plataformas disponibles en tu región:</p>
             
-            <!-- Plataformas con Links Directos -->
-            <div id="providers" class="flex flex-wrap gap-2.5 justify-center py-3 bg-zinc-950/60 rounded-xl border border-zinc-800 mb-4 min-h-[90px] items-center">
-                <!-- Logos con links -->
+            <!-- Plataformas con Enlaces Directos Verificados -->
+            <div id="providers" class="flex flex-wrap gap-2.5 justify-center py-3 bg-zinc-950/60 rounded-xl border border-zinc-800 mb-3 min-h-[90px] items-center">
+                <!-- Logos -->
+            </div>
+
+            <!-- Botón Enlace Directo JustWatch / Streaming Oficial -->
+            <div id="directLinkContainer" class="mb-4">
+                <!-- Inyectado por JS -->
             </div>
 
             <!-- Botón Guardar Favorito -->
@@ -166,7 +171,7 @@
 
     <!-- FOOTER REQUERIDO POR AD SENSE -->
     <footer class="border-t border-zinc-800 mt-8 py-6 text-center text-xs text-zinc-500 max-w-5xl mx-auto w-full">
-        <p class="mb-2">© 2026 Dónde Te Veo — Datos de streaming provistos por JustWatch / TMDB API.</p>
+        <p class="mb-2">© 2026 Dónde Te Veo — Datos de streaming provistos por TMDB / JustWatch.</p>
         <div class="flex justify-center gap-4">
             <a href="#" onclick="alert('Política de Privacidad: Dónde Te Veo utiliza cookies técnicas y herramientas de terceros para mostrar anuncios y consultar disponibilidad de contenidos de forma anónima.'); return false;" class="hover:text-zinc-300 underline">Política de Privacidad</a>
             <span>•</span>
@@ -181,19 +186,6 @@
         let userCountry = 'AR'; 
         let favorites = JSON.parse(localStorage.getItem('streamFavs')) || [];
 
-        // Diccionario de URLs base oficiales de plataformas para redirección
-        const providerUrls = {
-            "Netflix": "https://www.netflix.com/search?q=",
-            "Amazon Prime Video": "https://www.primevideo.com/search/ref=atv_nb_sr?phrase=",
-            "Disney Plus": "https://www.disneyplus.com/search?q=",
-            "HBO Max": "https://www.max.com/",
-            "Max": "https://www.max.com/",
-            "Apple TV": "https://tv.apple.com/search?term=",
-            "Paramount Plus": "https://www.paramountplus.com/",
-            "Star Plus": "https://www.starplus.com/",
-            "Pluto TV": "https://pluto.tv/search"
-        };
-
         // Detectar País por IP al iniciar
         async function detectUserCountry() {
             try {
@@ -207,7 +199,7 @@
             } catch (error) { console.log("Usando país AR por defecto."); }
         }
 
-        // Carga inicial de Películas en Tendencia (Evita que AdSense vea el sitio vacío)
+        // Carga inicial de Películas en Tendencia
         async function loadTrendingMovies() {
             try {
                 const res = await fetch(`https://api.themoviedb.org/3/trending/all/week?api_key=${API_KEY}&language=es-AR`);
@@ -221,7 +213,7 @@
 
         function changeCountry(code) { 
             userCountry = code; 
-            if (currentMovie) openModal(currentMovie.id, currentMovie.type, currentMovie.title, currentMovie.poster);
+            if (currentMovie) openModal(currentMovie.id, currentMovie.type, currentMovie.title, currentMovie.poster_path);
         }
 
         function goHome() { 
@@ -237,7 +229,7 @@
                 return;
             }
             try {
-                const res = await fetch(`https://api.themoviedb.org/3/search/multi?api_key=${API_KEY}&language=es-AR&query=${val}`);
+                const res = await fetch(`https://api.themoviedb.org/3/search/multi?api_key=${API_KEY}&language=es-AR&query=${encodeURIComponent(val)}`);
                 const data = await res.json();
                 document.getElementById('sectionTitle').innerText = `🔍 Resultados para "${val}"`;
                 renderResults(data.results);
@@ -269,44 +261,58 @@
             });
         }
 
-        // Modal Dónde Ver + Redirección a Plataformas + Recomendaciones
+        // Modal Dónde Ver con Enlace Oficial Verificado
         async function openModal(id, type, title, posterPath) {
             currentMovie = { id, title, type, poster_path: posterPath };
             document.getElementById('modalTitle').innerText = title;
-            document.getElementById('modalRegionText').innerText = `Plataformas disponibles en (${userCountry}) — Tocá para ir a verla:`;
+            document.getElementById('modalRegionText').innerText = `Plataformas disponibles en (${userCountry}):`;
             
             updateFavButtonState();
             document.getElementById('modal').classList.replace('hidden', 'flex');
             
             const provContainer = document.getElementById('providers');
+            const linkContainer = document.getElementById('directLinkContainer');
             provContainer.innerHTML = '<span class="text-zinc-500 text-xs">Consultando disponibilidad oficial...</span>';
+            linkContainer.innerHTML = '';
             
-            // Consultar Proveedores de Streaming
             try {
                 const res = await fetch(`https://api.themoviedb.org/3/${type}/${id}/watch/providers?api_key=${API_KEY}`);
                 const data = await res.json();
                 const regionData = data.results?.[userCountry];
                 const platforms = regionData?.flatrate || regionData?.rent || regionData?.buy || []; 
+                const officialJustWatchLink = regionData?.link;
                 
                 if (platforms.length > 0) {
-                    provContainer.innerHTML = platforms.map(p => {
-                        const directUrl = providerUrls[p.provider_name] 
-                            ? `${providerUrls[p.provider_name]}${encodeURIComponent(title)}` 
-                            : `https://www.google.com/search?q=${encodeURIComponent('ver ' + title + ' en ' + p.provider_name)}`;
+                    provContainer.innerHTML = platforms.map(p => `
+                        <div class="text-center p-1.5">
+                            <img src="https://image.tmdb.org/t/p/w200${p.logo_path}" class="w-10 h-10 sm:w-12 sm:h-12 rounded-xl mb-1 shadow-md mx-auto border border-zinc-700">
+                            <span class="text-[9px] text-zinc-400 block truncate max-w-[60px]">${p.provider_name}</span>
+                        </div>
+                    `).join('');
 
-                        return `
-                            <a href="${directUrl}" target="_blank" rel="noopener noreferrer" 
-                               class="text-center p-1.5 hover:scale-105 transition transform group" title="Ver en ${p.provider_name}">
-                                <img src="https://image.tmdb.org/t/p/w200${p.logo_path}" class="w-10 h-10 sm:w-12 sm:h-12 rounded-xl mb-1 shadow-md mx-auto border border-zinc-700 group-hover:border-red-500">
-                                <span class="text-[9px] text-zinc-400 block truncate max-w-[55px] group-hover:text-white">${p.provider_name}</span>
-                            </a>`;
-                    }).join('');
+                    if (officialJustWatchLink) {
+                        linkContainer.innerHTML = `
+                            <a href="${officialJustWatchLink}" target="_blank" rel="noopener noreferrer" 
+                               class="w-full bg-red-600/20 hover:bg-red-600/30 text-red-400 border border-red-500/40 rounded-xl py-2 px-3 text-xs flex items-center justify-center gap-2 font-medium transition">
+                                <span>▶️</span> Abrir ficha directa de streaming
+                            </a>
+                        `;
+                    }
                 } else {
                     provContainer.innerHTML = `<p class="text-zinc-500 text-xs p-3 text-center">No está disponible en streaming por suscripción en (${userCountry}).</p>`;
+                    if (officialJustWatchLink) {
+                        linkContainer.innerHTML = `
+                            <a href="${officialJustWatchLink}" target="_blank" rel="noopener noreferrer" 
+                               class="w-full bg-zinc-800 hover:bg-zinc-700 text-zinc-300 border border-zinc-700 rounded-xl py-2 px-3 text-xs flex items-center justify-center gap-2 font-medium transition">
+                                <span>🔍</span> Ver opciones de compra/alquiler en tu país
+                            </a>
+                        `;
+                    }
                 }
-            } catch (error) { provContainer.innerHTML = '<p class="text-red-400 text-xs">Error al cargar plataformas.</p>'; }
+            } catch (error) { 
+                provContainer.innerHTML = '<p class="text-red-400 text-xs">Error al cargar plataformas.</p>'; 
+            }
 
-            // Cargar Títulos Similares / Recomendaciones
             loadRecommendations(id, type);
         }
 
@@ -330,7 +336,7 @@
                             </div>`;
                     }).join('');
                 } else {
-                    recContainer.innerHTML = '<span class="text-zinc-600 text-[10px] col-span-3">No hay recomendaciones directas disponibles.</span>';
+                    recContainer.innerHTML = '<span class="text-zinc-600 text-[10px] col-span-3">No hay recomendaciones disponibles.</span>';
                 }
             } catch (error) {
                 recContainer.innerHTML = '';
@@ -339,7 +345,6 @@
 
         function closeModal() { document.getElementById('modal').classList.replace('flex', 'hidden'); }
 
-        // Favoritos 100% Ilimitados (A la gorra)
         function toggleFavorite() {
             if (!currentMovie) return;
             const index = favorites.findIndex(f => f.id === currentMovie.id);
@@ -367,7 +372,6 @@
             }
         }
 
-        // Modal de Favoritos Interactivos (Permite abrir la disponibilidad directa)
         function openFavoritesModal() {
             const container = document.getElementById('favsList');
             if (favorites.length === 0) {
