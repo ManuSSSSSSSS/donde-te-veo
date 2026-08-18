@@ -128,16 +128,11 @@
             
             <span class="bg-red-600/20 text-red-500 text-[10px] sm:text-xs font-bold px-3 py-1 rounded-full uppercase tracking-wider mb-2 inline-block">Disponibilidad Oficial</span>
             <h2 id="modalTitle" class="text-2xl sm:text-3xl font-cinema text-white mb-1 leading-tight">Título</h2>
-            <p id="modalRegionText" class="text-zinc-400 text-xs mb-3">Plataformas disponibles en tu región:</p>
+            <p id="modalRegionText" class="text-zinc-400 text-xs mb-3">Tocá la plataforma para ir directo:</p>
             
-            <!-- Plataformas con Enlaces Directos Verificados -->
-            <div id="providers" class="flex flex-wrap gap-2.5 justify-center py-3 bg-zinc-950/60 rounded-xl border border-zinc-800 mb-3 min-h-[90px] items-center">
-                <!-- Logos -->
-            </div>
-
-            <!-- Botón Enlace Directo JustWatch / Streaming Oficial -->
-            <div id="directLinkContainer" class="mb-4">
-                <!-- Inyectado por JS -->
+            <!-- Logos de Plataformas Clickeables Limpios -->
+            <div id="providers" class="flex flex-wrap gap-3 justify-center py-4 bg-zinc-950/60 rounded-xl border border-zinc-800 mb-4 min-h-[90px] items-center">
+                <!-- Logos con links directos inyectados por JS -->
             </div>
 
             <!-- Botón Guardar Favorito -->
@@ -171,7 +166,7 @@
 
     <!-- FOOTER REQUERIDO POR AD SENSE -->
     <footer class="border-t border-zinc-800 mt-8 py-6 text-center text-xs text-zinc-500 max-w-5xl mx-auto w-full">
-        <p class="mb-2">© 2026 Dónde Te Veo — Datos de streaming provistos por TMDB / JustWatch.</p>
+        <p class="mb-2">© 2026 Dónde Te Veo — Datos de streaming provistos por TMDB API.</p>
         <div class="flex justify-center gap-4">
             <a href="#" onclick="alert('Política de Privacidad: Dónde Te Veo utiliza cookies técnicas y herramientas de terceros para mostrar anuncios y consultar disponibilidad de contenidos de forma anónima.'); return false;" class="hover:text-zinc-300 underline">Política de Privacidad</a>
             <span>•</span>
@@ -261,53 +256,35 @@
             });
         }
 
-        // Modal Dónde Ver con Enlace Oficial Verificado
+        // Modal Dónde Ver con Logos Clickeables Directos
         async function openModal(id, type, title, posterPath) {
             currentMovie = { id, title, type, poster_path: posterPath };
             document.getElementById('modalTitle').innerText = title;
-            document.getElementById('modalRegionText').innerText = `Plataformas disponibles en (${userCountry}):`;
+            document.getElementById('modalRegionText').innerText = `Plataformas disponibles en (${userCountry}) — Tocá el logo para abrir:`;
             
             updateFavButtonState();
             document.getElementById('modal').classList.replace('hidden', 'flex');
             
             const provContainer = document.getElementById('providers');
-            const linkContainer = document.getElementById('directLinkContainer');
             provContainer.innerHTML = '<span class="text-zinc-500 text-xs">Consultando disponibilidad oficial...</span>';
-            linkContainer.innerHTML = '';
             
             try {
                 const res = await fetch(`https://api.themoviedb.org/3/${type}/${id}/watch/providers?api_key=${API_KEY}`);
                 const data = await res.json();
                 const regionData = data.results?.[userCountry];
                 const platforms = regionData?.flatrate || regionData?.rent || regionData?.buy || []; 
-                const officialJustWatchLink = regionData?.link;
+                const streamLink = regionData?.link || '#';
                 
                 if (platforms.length > 0) {
                     provContainer.innerHTML = platforms.map(p => `
-                        <div class="text-center p-1.5">
-                            <img src="https://image.tmdb.org/t/p/w200${p.logo_path}" class="w-10 h-10 sm:w-12 sm:h-12 rounded-xl mb-1 shadow-md mx-auto border border-zinc-700">
-                            <span class="text-[9px] text-zinc-400 block truncate max-w-[60px]">${p.provider_name}</span>
-                        </div>
+                        <a href="${streamLink}" target="_blank" rel="noopener noreferrer" 
+                           class="text-center p-1.5 hover:scale-110 transition-transform cursor-pointer group" title="Ver en ${p.provider_name}">
+                            <img src="https://image.tmdb.org/t/p/w200${p.logo_path}" class="w-11 h-11 sm:w-12 sm:h-12 rounded-xl mb-1 shadow-md mx-auto border border-zinc-700 group-hover:border-red-500">
+                            <span class="text-[9px] text-zinc-400 block truncate max-w-[60px] group-hover:text-white">${p.provider_name}</span>
+                        </a>
                     `).join('');
-
-                    if (officialJustWatchLink) {
-                        linkContainer.innerHTML = `
-                            <a href="${officialJustWatchLink}" target="_blank" rel="noopener noreferrer" 
-                               class="w-full bg-red-600/20 hover:bg-red-600/30 text-red-400 border border-red-500/40 rounded-xl py-2 px-3 text-xs flex items-center justify-center gap-2 font-medium transition">
-                                <span>▶️</span> Abrir ficha directa de streaming
-                            </a>
-                        `;
-                    }
                 } else {
                     provContainer.innerHTML = `<p class="text-zinc-500 text-xs p-3 text-center">No está disponible en streaming por suscripción en (${userCountry}).</p>`;
-                    if (officialJustWatchLink) {
-                        linkContainer.innerHTML = `
-                            <a href="${officialJustWatchLink}" target="_blank" rel="noopener noreferrer" 
-                               class="w-full bg-zinc-800 hover:bg-zinc-700 text-zinc-300 border border-zinc-700 rounded-xl py-2 px-3 text-xs flex items-center justify-center gap-2 font-medium transition">
-                                <span>🔍</span> Ver opciones de compra/alquiler en tu país
-                            </a>
-                        `;
-                    }
                 }
             } catch (error) { 
                 provContainer.innerHTML = '<p class="text-red-400 text-xs">Error al cargar plataformas.</p>'; 
