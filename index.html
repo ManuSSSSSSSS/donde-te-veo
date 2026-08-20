@@ -10,7 +10,6 @@
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🍿</text></svg>">
 
-    <script src="https://gumroad.com/js/gumroad.js"></script>
     <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-8040246767660046" crossorigin="anonymous"></script>
 
     <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
@@ -52,11 +51,10 @@
                     <span>⭐</span> <span>Favoritos</span>
                 </button>
                 
-                <!-- Botón Apoyar el proyecto (Tecito / Mercado Pago) -->
-<a class="bg-red-600 hover:bg-red-700 text-white font-bold py-2.5 px-3 sm:px-4 rounded-lg shadow-lg transition text-xs sm:text-sm uppercase tracking-wider flex items-center gap-1.5 cursor-pointer whitespace-nowrap" 
-   href="https://tecito.app/user_7rnskbmq" target="_blank" rel="noopener noreferrer">
-    <span>☕</span> <span>Apoyar el proyecto</span>
-</a>
+                <!-- Botón Apoyar el proyecto (Tecito) -->
+                <a class="bg-red-600 hover:bg-red-700 text-white font-bold py-2.5 px-3 sm:px-4 rounded-lg shadow-lg transition text-xs sm:text-sm uppercase tracking-wider flex items-center gap-1.5 cursor-pointer whitespace-nowrap" 
+                   href="https://tecito.app/user_7rnskbmq" target="_blank" rel="noopener noreferrer">
+                    <span>☕</span> <span>Apoyar el proyecto</span>
                 </a>
             </div>
         </header>
@@ -129,7 +127,7 @@
             
             <span class="bg-red-600/20 text-red-500 text-[10px] sm:text-xs font-bold px-3 py-1 rounded-full uppercase tracking-wider mb-2 inline-block">Disponibilidad Oficial</span>
             <h2 id="modalTitle" class="text-2xl sm:text-3xl font-cinema text-white mb-1 leading-tight">Título</h2>
-            <p id="modalRegionText" class="text-zinc-400 text-xs mb-3">Tocá el logo para abrir directo en la plataforma:</p>
+            <p id="modalRegionText" class="text-zinc-400 text-xs mb-3">Plataformas en tu región — Tocá el logo para abrir:</p>
             
             <!-- Logos con Redirección Directa al Título -->
             <div id="providers" class="flex flex-wrap gap-3 justify-center py-4 bg-zinc-950/60 rounded-xl border border-zinc-800 mb-4 min-h-[90px] items-center">
@@ -182,7 +180,6 @@
         let userCountry = 'AR'; 
         let favorites = JSON.parse(localStorage.getItem('streamFavs')) || [];
 
-        // Mapeo de enlaces de búsqueda directa a cada servicio
         function getDirectPlatformLink(providerName, movieTitle) {
             const query = encodeURIComponent(movieTitle);
             const name = providerName.toLowerCase();
@@ -198,7 +195,6 @@
             return `https://www.google.com/search?q=${encodeURIComponent('ver ' + movieTitle + ' en ' + providerName)}`;
         }
 
-        // Detectar País por IP al iniciar
         async function detectUserCountry() {
             try {
                 const res = await fetch('https://ipapi.co/json/');
@@ -211,7 +207,6 @@
             } catch (error) { console.log("Usando país AR por defecto."); }
         }
 
-        // Carga inicial de Películas en Tendencia
         async function loadTrendingMovies() {
             try {
                 const res = await fetch(`https://api.themoviedb.org/3/trending/all/week?api_key=${API_KEY}&language=es-AR`);
@@ -233,7 +228,6 @@
             loadTrendingMovies();
         }
 
-        // Buscador reactivo
         document.getElementById('searchInput').addEventListener('input', async (e) => {
             const val = e.target.value.trim();
             if (val.length < 3) {
@@ -273,7 +267,6 @@
             });
         }
 
-        // Modal Dónde Ver con Logos Clickeables Directos
         async function openModal(id, type, title, posterPath) {
             currentMovie = { id, title, type, poster_path: posterPath };
             document.getElementById('modalTitle').innerText = title;
